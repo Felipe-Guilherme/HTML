@@ -1,28 +1,53 @@
 /* ==========================================================================
-   CONFIGURAÇÕES GERAIS E CORES (VARIÁVEIS)
+   CONFIGURAÇÕES GERAIS E TEMAS DE COR (VARIÁVEIS)
    ========================================================================== */
 :root {
-  /* Paleta de Vermelhos Legíveis e Suaves */
-  --red-dark: #4a0808;       /* Vermelho escuro para textos e cabeçalhos */
-  --red-main: #8c1c1c;       /* Vermelho principal elegante */
-  --red-accent: #c92a2a;     /* Vermelho de destaque/ação */
-  --red-light: #fff5f5;      /* Fundo suave avermelhado */
-  --red-border: #f8c4c4;     /* Bordas suaves */
-  
-  /* Cores Neutras e de Apoio */
-  --bg-page: #faf7f7;        /* Fundo suave para não cansar a vista */
-  --bg-card: #ffffff;        /* Fundo dos cartões brancos */
-  --text-main: #2d2424;      /* Texto principal com alto contraste */
-  --text-muted: #665555;     /* Texto secundário */
+  /* Paleta Padrão (Vermelho Suave e Elegante) */
+  --bg-page: #faf7f7;
+  --bg-card: #ffffff;
+  --text-main: #2d2424;
+  --text-muted: #665555;
+  --red-dark: #4a0808;
+  --red-main: #8c1c1c;
+  --red-accent: #c92a2a;
+  --red-light: #fff5f5;
+  --red-border: #f8c4c4;
   
   /* Dimensões e Efeitos */
   --font-scale: 1rem;
-  --radius-lg: 20px;
-  --radius-md: 12px;
-  --radius-sm: 8px;
-  --shadow-soft: 0 4px 20px rgba(74, 8, 8, 0.06);
-  --shadow-hover: 0 8px 25px rgba(74, 8, 8, 0.12);
+  --radius-lg: 16px;
+  --radius-md: 10px;
+  --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.05);
+  --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.1);
   --transition: all 0.25s ease;
+}
+
+/* Tema: Alto Contraste */
+body.theme-high-contrast {
+  --bg-page: #000000;
+  --bg-card: #121212;
+  --text-main: #ffff00;
+  --text-muted: #ffffff;
+  --red-dark: #ffff00;
+  --red-main: #ffcc00;
+  --red-accent: #ffffff;
+  --red-light: #222200;
+  --red-border: #ffff00;
+  --shadow-soft: 0 0 0 2px #ffff00;
+  --shadow-hover: 0 0 0 3px #ffff00;
+}
+
+/* Tema: Modo Leitura (Tons Quentes) */
+body.theme-warm {
+  --bg-page: #fbf0d9;
+  --bg-card: #fff9ed;
+  --text-main: #432818;
+  --text-muted: #6f4e37;
+  --red-dark: #6b2d0c;
+  --red-main: #9c4114;
+  --red-accent: #bc4749;
+  --red-light: #f7e1d7;
+  --red-border: #e6b8a2;
 }
 
 /* ==========================================================================
@@ -49,29 +74,42 @@ body {
 .accessibility-bar {
   background-color: var(--red-dark);
   color: #ffffff;
-  padding: 12px 24px;
+  padding: 12px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: sticky;
   top: 0;
   z-index: 1000;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  flex-wrap: wrap;
+  gap: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-.acc-buttons {
+.acc-group {
   display: flex;
-  gap: 10px;
+  gap: 8px;
+  align-items: center;
   flex-wrap: wrap;
+}
+
+.acc-label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+body.theme-high-contrast .acc-label {
+  color: #000000;
 }
 
 .btn-acc {
   background: #ffffff;
-  color: var(--red-dark);
+  color: #000000;
   border: none;
-  padding: 8px 16px;
+  padding: 6px 14px;
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   border-radius: 20px;
   cursor: pointer;
   transition: var(--transition);
@@ -79,98 +117,140 @@ body {
 
 .btn-acc:hover, 
 .btn-acc:focus {
-  background-color: var(--red-accent);
+  background: var(--red-accent);
   color: #ffffff;
-  transform: translateY(-2px);
-  outline: 3px solid #ffe3e3;
+  outline: 3px solid #ffffff;
+  transform: translateY(-1px);
 }
 
 /* ==========================================================================
-   2. CABEÇALHO PRINCIPAL
+   2. CABEÇALHO E NAVEGAÇÃO POR ABAS
    ========================================================================== */
 header {
-  background: linear-gradient(135deg, var(--red-dark) 0%, var(--red-main) 100%);
+  background: linear-gradient(135deg, var(--red-dark), var(--red-main));
   color: #ffffff;
   text-align: center;
-  padding: 50px 20px;
-  border-bottom-left-radius: 30px;
-  border-bottom-right-radius: 30px;
-  box-shadow: var(--shadow-soft);
+  padding: 40px 20px 24px 20px;
 }
 
 header h1 {
-  font-size: 2.4em;
+  font-size: 2.2em;
   font-weight: 800;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   letter-spacing: -0.5px;
 }
 
 header p {
-  font-size: 1.2em;
-  max-width: 700px;
+  font-size: 1.1em;
+  opacity: 0.95;
+  max-width: 650px;
   margin: 0 auto;
-  color: #ffe3e3;
-  font-weight: 400;
+}
+
+.nav-tabs {
+  display: flex;
+  justify-content: center;
+  background-color: var(--red-dark);
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 0 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tab-btn {
+  background: transparent;
+  color: #ffffff;
+  border: none;
+  padding: 14px 20px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  border-top-left-radius: var(--radius-md);
+  border-top-right-radius: var(--radius-md);
+  transition: var(--transition);
+}
+
+.tab-btn:hover {
+  background: var(--red-main);
+  color: #ffffff;
+}
+
+.tab-btn.active {
+  background: var(--bg-page);
+  color: var(--red-dark);
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.05);
+}
+
+body.theme-high-contrast .tab-btn.active {
+  background: #ffff00;
+  color: #000000;
 }
 
 /* ==========================================================================
-   3. ESTRUTURA DOS CARTÕES (CARDS)
+   3. ESTRUTURA DE CONTEÚDO E CARTÕES
    ========================================================================== */
 main {
   max-width: 960px;
-  margin: 35px auto;
+  margin: 30px auto;
   padding: 0 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .card {
   background: var(--bg-card);
   border-radius: var(--radius-lg);
-  padding: 32px;
+  padding: 30px;
+  border: 1px solid var(--red-border);
   box-shadow: var(--shadow-soft);
-  border: 1px solid rgba(140, 28, 28, 0.08);
   transition: var(--transition);
-}
-
-.card:hover {
-  box-shadow: var(--shadow-hover);
 }
 
 .card h2 {
   color: var(--red-dark);
   font-size: 1.6em;
-  margin-bottom: 18px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  margin-bottom: 16px;
 }
 
 /* ==========================================================================
-   4. ALERTAS E QUADROS DE SEGURANÇA
+   4. SEÇÃO DE SEGURANÇA E ALERTAS
    ========================================================================== */
 .alert-box {
   background-color: var(--red-light);
   border-left: 5px solid var(--red-accent);
-  padding: 18px 20px;
+  padding: 16px;
   border-radius: var(--radius-md);
   margin-bottom: 20px;
   font-size: 1.05em;
 }
 
 .emergency-box {
-  background: linear-gradient(145deg, var(--red-dark), #330505);
+  background: var(--red-dark);
   color: #ffffff;
   padding: 24px;
   border-radius: var(--radius-md);
   margin-top: 24px;
 }
 
+body.theme-high-contrast .emergency-box {
+  color: #000000;
+}
+
 .emergency-box h3 {
-  color: #ffc4c4;
   font-size: 1.25em;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 
 .tips-list {
@@ -179,7 +259,7 @@ main {
 
 .tips-list li {
   margin-bottom: 14px;
-  padding-left: 34px;
+  padding-left: 30px;
   position: relative;
   font-size: 1.05em;
 }
@@ -188,248 +268,177 @@ main {
   content: "✓";
   position: absolute;
   left: 0;
-  top: 2px;
-  background: var(--red-light);
+  top: 0;
   color: var(--red-accent);
   font-weight: bold;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  text-align: center;
-  line-height: 24px;
-  font-size: 0.85em;
-  border: 1px solid var(--red-border);
-}
-
-.emergency-box .tips-list li::before {
-  background: rgba(255, 255, 255, 0.15);
-  color: #ffffff;
-  border: none;
+  font-size: 1.2em;
 }
 
 /* ==========================================================================
-   5. SIMULADOR PRÁTICO (TELA DE CELULAR)
+   5. SIMULADOR DE CHAT INTERATIVO (TELAS E MENSAGENS)
    ========================================================================== */
-.sim-container {
-  background-color: var(--red-light);
+.chat-container {
+  background: var(--red-light);
   border: 1px solid var(--red-border);
   border-radius: var(--radius-lg);
-  padding: 24px;
-  margin: 20px 0;
-}
-
-.phone-screen {
-  background-color: #ffffff;
-  border: 6px solid #221818;
-  border-radius: 24px;
-  overflow: hidden;
-  max-width: 400px;
-  margin: 0 auto 20px auto;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-}
-
-.phone-header {
-  background-color: var(--red-dark);
-  color: #ffffff;
-  padding: 12px;
-  text-align: center;
-  font-weight: 600;
-  font-size: 0.95em;
-}
-
-.phone-body {
   padding: 20px;
-  min-height: 150px;
-  background-color: #fafafa;
-}
-
-.chat-bubble {
-  background-color: #ffffff;
-  border-left: 4px solid var(--red-accent);
-  padding: 14px 16px;
-  border-radius: var(--radius-md);
-  font-size: 1.05em;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-}
-
-.sim-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  max-width: 400px;
+  max-width: 520px;
   margin: 0 auto;
 }
 
-.btn-choice {
-  background-color: #ffffff;
-  color: var(--text-main);
-  border: 2px solid var(--red-border);
-  padding: 14px 18px;
-  border-radius: var(--radius-md);
-  font-size: 1.05em;
-  font-weight: 600;
+.phone-box {
+  background: #ffffff;
+  border: 4px solid var(--text-main);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.phone-bar {
+  background: var(--red-dark);
+  color: #ffffff;
+  padding: 12px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.95em;
+}
+
+body.theme-high-contrast .phone-bar {
+  color: #000000;
+}
+
+.chat-messages {
+  height: 280px;
+  overflow-y: auto;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background-color: #f9f9f9;
+}
+
+body.theme-high-contrast .chat-messages {
+  background-color: #000000;
+}
+
+.msg {
+  max-width: 82%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 0.95em;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+
+.msg-scammer {
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-left: 4px solid var(--red-accent);
+  align-self: flex-start;
+  color: #000000;
+}
+
+.msg-user {
+  background: var(--red-main);
+  color: #ffffff;
+  align-self: flex-end;
+}
+
+body.theme-high-contrast .msg-user {
+  color: #000000;
+}
+
+.chat-input-area {
+  display: flex;
+  padding: 10px;
+  background: #ffffff;
+  border-top: 1px solid #dddddd;
+  gap: 8px;
+}
+
+.chat-input-area input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.95em;
+  color: #000000;
+}
+
+.chat-input-area button {
+  background: var(--red-main);
+  color: #ffffff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 700;
   cursor: pointer;
-  text-align: left;
   transition: var(--transition);
 }
 
-.btn-choice:hover, 
-.btn-choice:focus {
-  background-color: var(--red-dark);
-  color: #ffffff;
-  border-color: var(--red-dark);
-  transform: translateY(-2px);
+.chat-input-area button:hover {
+  background: var(--red-accent);
 }
 
-.sim-feedback {
-  max-width: 400px;
-  margin: 18px auto 0 auto;
+/* Cartões de Avaliação da Resposta */
+.evaluation-card {
+  margin-top: 16px;
   padding: 16px;
   border-radius: var(--radius-md);
-  font-size: 1.05em;
   font-weight: 600;
   line-height: 1.5;
 }
 
-.feedback-success {
-  background-color: #e6f4ea;
-  color: #137333;
-  border: 1px solid #ceead6;
+.eval-safe {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
 }
 
-.feedback-danger {
-  background-color: var(--red-light);
-  color: #c5221f;
-  border: 1px solid var(--red-border);
+.eval-warning {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeeba;
 }
 
-.btn-next {
-  display: block;
-  margin: 14px auto 0 auto;
-  background: var(--red-main);
-  color: #ffffff;
-  border: none;
-  padding: 10px 24px;
-  border-radius: 20px;
-  font-size: 0.95rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.btn-next:hover {
-  background: var(--red-accent);
+.eval-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
 }
 
 /* ==========================================================================
-   6. PASSO A PASSO (TUTORIAIS)
+   6. GRADES, BOTÕES E DICIONÁRIO
    ========================================================================== */
-.tutorial-grid {
+.grid-2 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 18px;
-  margin-top: 20px;
-}
-
-.tutorial-box {
-  background-color: var(--red-light);
-  border: 1px solid var(--red-border);
-  border-radius: var(--radius-md);
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.tutorial-box h3 {
-  color: var(--red-dark);
-  font-size: 1.15em;
-}
-
-.step-number {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--red-main);
-  color: #ffffff;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  font-size: 0.8em;
-  font-weight: bold;
-  margin-right: 6px;
-}
-
-/* ==========================================================================
-   7. DICIONÁRIO E LINKS ÚTEIS
-   ========================================================================== */
-.dictionary-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 14px;
-  margin-top: 18px;
-}
-
-.dict-item {
-  background: #ffffff;
-  border: 1px solid var(--red-border);
-  padding: 16px;
-  border-radius: var(--radius-md);
-}
-
-.dict-item strong {
-  color: var(--red-main);
-  font-size: 1.05em;
-  display: block;
-  margin-bottom: 4px;
-}
-
-.links-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 16px;
-  margin-top: 18px;
+  margin-top: 16px;
 }
 
-.link-card {
-  background: #ffffff;
-  color: var(--red-dark);
-  border: 2px solid var(--red-border);
-  text-decoration: none;
+.box-item {
+  background: var(--bg-card);
+  border: 1px solid var(--red-border);
   padding: 18px;
   border-radius: var(--radius-md);
-  text-align: center;
-  font-weight: 700;
-  font-size: 1.05em;
   transition: var(--transition);
-  display: block;
 }
 
-.link-card small {
-  display: block;
-  font-weight: normal;
-  font-size: 0.85em;
-  margin-top: 4px;
-  color: var(--text-muted);
-}
-
-.link-card:hover, 
-.link-card:focus {
-  background: var(--red-main);
-  color: #ffffff;
+.box-item:hover {
   border-color: var(--red-main);
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-soft);
 }
 
-.link-card:hover small, 
-.link-card:focus small {
-  color: #ffe3e3;
+.box-item h3 {
+  color: var(--red-dark);
+  font-size: 1.1em;
+  margin-bottom: 8px;
 }
 
-/* ==========================================================================
-   8. BOTÃO DE LEITURA E RODAPÉ
-   ========================================================================== */
+.box-item strong {
+  color: var(--red-main);
+}
+
 .btn-speak {
   background: var(--red-light);
   color: var(--red-main);
@@ -437,8 +446,8 @@ main {
   padding: 10px 18px;
   border-radius: 20px;
   cursor: pointer;
-  font-size: 0.95rem;
   font-weight: 700;
+  font-size: 0.95rem;
   margin-top: 18px;
   transition: var(--transition);
 }
@@ -448,32 +457,51 @@ main {
   color: #ffffff;
 }
 
+/* ==========================================================================
+   7. RODAPÉ E AJUSTES RESPONSIVOS
+   ========================================================================== */
 footer {
-  background-color: var(--red-dark);
-  color: #ffe3e3;
+  background: var(--red-dark);
+  color: #ffffff;
   text-align: center;
-  padding: 35px 20px;
-  margin-top: 50px;
-  border-top-left-radius: 24px;
-  border-top-right-radius: 24px;
+  padding: 28px 20px;
+  margin-top: 40px;
 }
 
-/* ==========================================================================
-   9. RESPONSIVIDADE (DISPOSITIVOS MÓVEIS)
-   ========================================================================== */
+body.theme-high-contrast footer {
+  color: #000000;
+}
+
 @media (max-width: 768px) {
   .accessibility-bar {
     flex-direction: column;
-    gap: 10px;
-    padding: 12px;
+    align-items: stretch;
   }
-  header {
-    padding: 35px 15px;
+  
+  .acc-group {
+    justify-content: center;
+  }
+
+  .nav-tabs {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .tab-btn {
     border-radius: 0;
+    text-align: left;
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
+
+  header {
+    padding: 30px 15px 15px 15px;
+  }
+
   header h1 {
-    font-size: 1.8em;
+    font-size: 1.7em;
   }
+
   .card {
     padding: 20px;
   }

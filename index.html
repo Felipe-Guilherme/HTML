@@ -3,776 +3,537 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Conecta Sênior | Portal de Apoio Digital</title>
+  <title>Conecta Sênior | Portal de Apoio Digital Interativo</title>
   <style>
-    /* ==========================================================================
-       1. VARIÁVEIS E PALETA DE CORES (DESIGN TOKENS)
-       ========================================================================== */
     :root {
-      /* Palette de Vermelhos: Elegante, Moderno e de Alto Contraste */
-      --red-900: #4a0606; /* Vermelho escuro profundo para textos e cabeçalhos */
-      --red-800: #7a0c0c; /* Vermelho principal para gradientes */
-      --red-700: #9e1212; /* Vermelho tom médio para destaques */
-      --red-600: #c92a2a; /* Vermelho vibrante para botões e ações */
-      --red-100: #fde8e8; /* Vermelho muito claro para fundos de destaque */
-      --red-50:  #fff5f5; /* Tom suave de fundo para blocos legíveis */
-
-      /* Superfícies e Textos */
-      --bg-page: #faf6f6;
+      --bg-page: #faf7f7;
       --bg-card: #ffffff;
-      --text-main: #2d2222;
-      --text-muted: #5e4e4e;
-      --border-color: #f0cece;
-
-      /* Acessibilidade e Tamanho da Fonte */
+      --text-main: #2d2424;
+      --text-muted: #665555;
+      --red-dark: #4a0808;
+      --red-main: #8c1c1c;
+      --red-accent: #c92a2a;
+      --red-light: #fff5f5;
+      --red-border: #f8c4c4;
       --font-scale: 1rem;
-      --font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-
-      /* Cantos Arredondados e Sombras Suaves */
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 24px;
-      --shadow-sm: 0 4px 12px rgba(74, 6, 6, 0.04);
-      --shadow-md: 0 10px 25px rgba(74, 6, 6, 0.08);
-      --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      --radius-lg: 16px;
+      --radius-md: 10px;
     }
 
-    /* ==========================================================================
-       2. RESET E CONFIGURAÇÕES GERAIS
-       ========================================================================== */
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    /* Temas de Visualização Personalizados */
+    body.theme-high-contrast {
+      --bg-page: #000000;
+      --bg-card: #121212;
+      --text-main: #ffff00;
+      --text-muted: #ffffff;
+      --red-dark: #ffff00;
+      --red-main: #ffcc00;
+      --red-accent: #ffffff;
+      --red-light: #222200;
+      --red-border: #ffff00;
     }
 
+    body.theme-warm {
+      --bg-page: #fbf0d9;
+      --bg-card: #fff9ed;
+      --text-main: #432818;
+      --text-muted: #6f4e37;
+      --red-dark: #6b2d0c;
+      --red-main: #9c4114;
+      --red-accent: #bc4749;
+      --red-light: #f7e1d7;
+      --red-border: #e6b8a2;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: var(--font-family);
+      font-family: system-ui, -apple-system, sans-serif;
       background-color: var(--bg-page);
       color: var(--text-main);
       font-size: var(--font-scale);
       line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
     }
 
-    /* ==========================================================================
-       3. BARRA FIXA DE ACESSIBILIDADE
-       ========================================================================== */
+    /* Barra Fixa de Acessibilidade Ampliada */
     .accessibility-bar {
-      background-color: var(--red-900);
+      background-color: var(--red-dark);
       color: #ffffff;
-      padding: 12px 24px;
+      padding: 12px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       position: sticky;
       top: 0;
       z-index: 1000;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-      backdrop-filter: blur(10px);
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
-    .acc-buttons {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
+    .acc-group { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .acc-label { font-size: 0.9rem; font-weight: bold; }
 
     .btn-acc {
       background: #ffffff;
-      color: var(--red-900);
+      color: #000000;
       border: none;
-      padding: 8px 18px;
+      padding: 6px 14px;
       font-weight: 700;
-      font-size: 0.95rem;
-      border-radius: 50px;
+      font-size: 0.9rem;
+      border-radius: 20px;
       cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-      transition: var(--transition);
     }
 
-    .btn-acc:hover, 
-    .btn-acc:focus {
-      background-color: var(--red-600);
-      color: #ffffff;
-      transform: translateY(-2px);
-      outline: 3px solid #ffc9c9;
+    .btn-acc:hover, .btn-acc:focus {
+      outline: 3px solid var(--red-accent);
     }
 
-    /* ==========================================================================
-       4. CABEÇALHO PRINCIPAL
-       ========================================================================== */
     header {
-      background: linear-gradient(135deg, var(--red-900) 0%, var(--red-700) 100%);
+      background: linear-gradient(135deg, var(--red-dark), var(--red-main));
       color: #ffffff;
       text-align: center;
-      padding: 60px 20px;
-      border-bottom-left-radius: var(--radius-lg);
-      border-bottom-right-radius: var(--radius-lg);
-      box-shadow: var(--shadow-md);
+      padding: 40px 20px 20px 20px;
     }
 
-    header h1 {
-      font-size: 2.75em;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-      margin-bottom: 12px;
-    }
+    header h1 { font-size: 2.2em; margin-bottom: 8px; }
+    header p { font-size: 1.1em; opacity: 0.9; }
 
-    header p {
-      font-size: 1.25em;
-      max-width: 720px;
-      margin: 0 auto;
-      color: #ffe0e0;
-      font-weight: 400;
-    }
-
-    /* ==========================================================================
-       5. ESTRUTURA PRINCIPAL E CARDS DE CONTEÚDO
-       ========================================================================== */
-    main {
-      max-width: 1000px;
-      margin: 40px auto;
-      padding: 0 20px;
+    /* Navegação por Abas */
+    .nav-tabs {
       display: flex;
-      flex-direction: column;
-      gap: 32px;
+      justify-content: center;
+      background: var(--red-dark);
+      flex-wrap: wrap;
+      gap: 4px;
+      padding: 0 10px;
     }
+
+    .tab-btn {
+      background: transparent;
+      color: #ffffff;
+      border: none;
+      padding: 14px 20px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      transition: background 0.2s;
+    }
+
+    .tab-btn:hover { background: var(--red-main); }
+    .tab-btn.active {
+      background: var(--bg-page);
+      color: var(--red-dark);
+    }
+
+    /* Conteúdo das Abas */
+    main { max-width: 960px; margin: 30px auto; padding: 0 20px; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
 
     .card {
       background: var(--bg-card);
-      border-radius: var(--radius-md);
-      padding: 36px;
-      box-shadow: var(--shadow-sm);
-      border: 1px solid var(--border-color);
-      transition: var(--transition);
+      border-radius: var(--radius-lg);
+      padding: 30px;
+      border: 1px solid var(--red-border);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
     }
 
-    .card:hover {
-      box-shadow: var(--shadow-md);
-      border-color: #e5b3b3;
-    }
+    .card h2 { color: var(--red-dark); margin-bottom: 16px; }
 
-    .card h2 {
-      color: var(--red-900);
-      font-size: 1.8em;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    /* ==========================================================================
-       6. BLOCOS DE ALERTAS E DICAS DE SEGURANÇA
-       ========================================================================== */
     .alert-box {
-      background-color: var(--red-50);
-      border-left: 6px solid var(--red-600);
-      padding: 20px;
-      border-radius: var(--radius-sm);
-      margin-bottom: 24px;
-      font-size: 1.05em;
+      background-color: var(--red-light);
+      border-left: 5px solid var(--red-accent);
+      padding: 16px;
+      border-radius: var(--radius-md);
+      margin-bottom: 20px;
     }
 
     .emergency-box {
-      background: linear-gradient(145deg, var(--red-900), #2e0404);
+      background: var(--red-dark);
       color: #ffffff;
-      padding: 30px;
+      padding: 20px;
       border-radius: var(--radius-md);
-      margin-top: 28px;
-      box-shadow: var(--shadow-md);
+      margin-top: 20px;
     }
 
-    .emergency-box h3 {
-      color: #ffcccc;
-      font-size: 1.35em;
-      margin-bottom: 16px;
-    }
-
-    .tips-list {
-      list-style: none;
-    }
-
-    .tips-list li {
-      margin-bottom: 16px;
-      padding-left: 36px;
-      position: relative;
-      font-size: 1.05em;
-    }
-
+    .tips-list { list-style: none; }
+    .tips-list li { margin-bottom: 12px; padding-left: 30px; position: relative; }
     .tips-list li::before {
-      content: "✓";
-      position: absolute;
-      left: 0;
-      top: 2px;
-      background: var(--red-100);
-      color: var(--red-700);
-      font-weight: bold;
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      text-align: center;
-      line-height: 24px;
-      font-size: 0.85em;
+      content: "✓"; position: absolute; left: 0; color: var(--red-accent); font-weight: bold;
     }
 
-    .emergency-box .tips-list li::before {
-      background: rgba(255, 255, 255, 0.15);
-      color: #ffffff;
-    }
-
-    /* ==========================================================================
-       7. SIMULADOR INTERATIVO DE CELULAR
-       ========================================================================== */
-    .sim-container {
-      background-color: var(--red-50);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-md);
-      padding: 28px;
-      margin: 24px 0;
-    }
-
-    .phone-screen {
-      background-color: #ffffff;
-      border: 8px solid #201818;
-      border-radius: 28px;
-      overflow: hidden;
-      max-width: 420px;
-      margin: 0 auto 24px auto;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
-    }
-
-    .phone-header {
-      background-color: var(--red-900);
-      color: #ffffff;
-      padding: 14px;
-      text-align: center;
-      font-weight: 600;
-      font-size: 0.95em;
-      letter-spacing: 0.5px;
-    }
-
-    .phone-body {
-      padding: 24px;
-      min-height: 160px;
-      background-color: #fafafa;
-    }
-
-    .chat-bubble {
-      background-color: #ffffff;
-      border: 1px solid #e8e8e8;
-      border-left: 5px solid var(--red-600);
-      padding: 18px;
-      border-radius: var(--radius-sm);
-      font-size: 1.05em;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-    }
-
-    .sim-actions {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      max-width: 420px;
+    /* Simulador de Chat Interativo com Digitação */
+    .chat-container {
+      background: var(--red-light);
+      border: 1px solid var(--red-border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      max-width: 500px;
       margin: 0 auto;
     }
 
-    .btn-choice {
-      background-color: #ffffff;
-      color: var(--text-main);
-      border: 2px solid var(--border-color);
-      padding: 16px 20px;
-      border-radius: var(--radius-sm);
-      font-size: 1.05em;
-      font-weight: 600;
-      cursor: pointer;
-      text-align: left;
-      transition: var(--transition);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    .phone-box {
+      background: #ffffff;
+      border: 4px solid var(--text-main);
+      border-radius: 20px;
+      overflow: hidden;
     }
 
-    .btn-choice:hover, 
-    .btn-choice:focus {
-      background-color: var(--red-900);
-      color: #ffffff;
-      border-color: var(--red-900);
-      transform: translateY(-2px);
+    .phone-bar {
+      background: var(--red-dark);
+      color: white;
+      padding: 10px;
+      text-align: center;
+      font-weight: bold;
     }
 
-    .sim-feedback {
-      max-width: 420px;
-      margin: 20px auto 0 auto;
-      padding: 18px;
-      border-radius: var(--radius-sm);
-      font-size: 1.05em;
-      font-weight: 600;
-      line-height: 1.5;
-    }
-
-    .feedback-success {
-      background-color: #e6f4ea;
-      color: #137333;
-      border: 1px solid #ceead6;
-    }
-
-    .feedback-danger {
-      background-color: var(--red-100);
-      color: var(--red-900);
-      border: 1px solid var(--border-color);
-    }
-
-    .btn-next {
-      display: block;
-      margin: 16px auto 0 auto;
-      background: var(--red-700);
-      color: #ffffff;
-      border: none;
-      padding: 12px 28px;
-      border-radius: 50px;
-      font-size: 0.95rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: var(--transition);
-    }
-
-    .btn-next:hover {
-      background: var(--red-600);
-    }
-
-    /* ==========================================================================
-       8. GUIAS PASSO A PASSO E DICIONÁRIO DIGITAL
-       ========================================================================== */
-    .tutorial-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-      margin-top: 24px;
-    }
-
-    .tutorial-box {
-      background-color: var(--red-50);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-md);
-      padding: 24px;
+    .chat-messages {
+      height: 260px;
+      overflow-y: auto;
+      padding: 15px;
       display: flex;
       flex-direction: column;
       gap: 12px;
+      background: #f9f9f9;
     }
 
-    .tutorial-box h3 {
-      color: var(--red-900);
-      font-size: 1.2em;
+    .msg {
+      max-width: 80%;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 0.95em;
+      line-height: 1.4;
     }
 
-    .step-number {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--red-700);
-      color: #ffffff;
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      font-size: 0.85em;
-      font-weight: bold;
-      margin-right: 6px;
-    }
-
-    .dictionary-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 16px;
-      margin-top: 20px;
-    }
-
-    .dict-item {
+    .msg-scammer {
       background: #ffffff;
-      border: 1px solid var(--border-color);
-      padding: 20px;
-      border-radius: var(--radius-sm);
-      box-shadow: var(--shadow-sm);
+      border: 1px solid #ddd;
+      border-left: 4px solid var(--red-accent);
+      align-self: flex-start;
+      color: #000;
     }
 
-    .dict-item strong {
-      color: var(--red-700);
-      font-size: 1.1em;
-      display: block;
-      margin-bottom: 6px;
-    }
-
-    /* ==========================================================================
-       9. GRADE DE LINKS ÚTEIS
-       ========================================================================== */
-    .links-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-      margin-top: 20px;
-    }
-
-    .link-card {
-      background: #ffffff;
-      color: var(--red-900);
-      border: 2px solid var(--border-color);
-      text-decoration: none;
-      padding: 22px;
-      border-radius: var(--radius-md);
-      text-align: center;
-      font-weight: 700;
-      font-size: 1.1em;
-      transition: var(--transition);
-      display: block;
-    }
-
-    .link-card small {
-      display: block;
-      font-weight: normal;
-      font-size: 0.85em;
-      margin-top: 6px;
-      color: var(--text-muted);
-    }
-
-    .link-card:hover, 
-    .link-card:focus {
-      background: var(--red-700);
+    .msg-user {
+      background: var(--red-main);
       color: #ffffff;
-      border-color: var(--red-700);
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-sm);
+      align-self: flex-end;
     }
 
-    .link-card:hover small, 
-    .link-card:focus small {
-      color: #ffe0e0;
-    }
-
-    /* ==========================================================================
-       10. BOTÕES DE ÁUDIO E RODAPÉ
-       ========================================================================== */
-    .btn-speak {
-      background: var(--red-100);
-      color: var(--red-900);
-      border: 1px solid var(--border-color);
-      padding: 12px 22px;
-      border-radius: 50px;
-      cursor: pointer;
-      font-size: 0.95rem;
-      font-weight: 700;
-      margin-top: 20px;
-      transition: var(--transition);
-      display: inline-flex;
-      align-items: center;
+    .chat-input-area {
+      display: flex;
+      padding: 10px;
+      background: #ffffff;
+      border-top: 1px solid #ddd;
       gap: 8px;
     }
 
-    .btn-speak:hover {
-      background: var(--red-700);
-      color: #ffffff;
+    .chat-input-area input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 0.95em;
     }
 
-    footer {
-      background-color: var(--red-900);
-      color: #ffe0e0;
-      text-align: center;
-      padding: 40px 20px;
-      margin-top: 60px;
-      border-top-left-radius: var(--radius-lg);
-      border-top-right-radius: var(--radius-lg);
+    .chat-input-area button {
+      background: var(--red-main);
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
     }
 
-    /* ==========================================================================
-       11. RESPONSIVIDADE
-       ========================================================================== */
-    @media (max-width: 768px) {
-      .accessibility-bar {
-        flex-direction: column;
-        gap: 12px;
-      }
-      header {
-        padding: 40px 20px;
-        border-radius: 0;
-      }
-      header h1 {
-        font-size: 2em;
-      }
-      .card {
-        padding: 24px;
-      }
+    .evaluation-card {
+      margin-top: 15px;
+      padding: 15px;
+      border-radius: var(--radius-md);
+      font-weight: bold;
     }
+
+    .eval-safe { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+    .eval-warning { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+    .eval-danger { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+
+    /* Grades de Conteúdo */
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 16px; }
+    .box-item { background: var(--bg-card); border: 1px solid var(--red-border); padding: 16px; border-radius: var(--radius-md); }
+    .btn-speak { background: var(--red-light); color: var(--red-main); border: 1px solid var(--red-border); padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 15px; }
+
+    footer { background: var(--red-dark); color: white; text-align: center; padding: 25px; margin-top: 40px; }
   </style>
 </head>
 <body>
 
-  <!-- Barra Fixa de Acessibilidade -->
-  <div class="accessibility-bar" role="region" aria-label="Ferramentas de Acessibilidade">
-    <span><strong>Ferramentas de Leitura:</strong></span>
-    <div class="acc-buttons">
-      <button class="btn-acc" onclick="changeFontSize(1)" aria-label="Aumentar texto">A+ Aumentar Texto</button>
-      <button class="btn-acc" onclick="changeFontSize(-1)" aria-label="Diminuir texto">A- Diminuir Texto</button>
-      <button class="btn-acc" onclick="resetFontSize()" aria-label="Tamanho normal do texto">Texto Normal</button>
+  <!-- Barra Fixa de Acessibilidade Ampliada -->
+  <div class="accessibility-bar" role="region" aria-label="Acessibilidade">
+    <div class="acc-group">
+      <span class="acc-label">Tamanho do Texto:</span>
+      <button class="btn-acc" onclick="changeFontSize(1)" aria-label="Aumentar texto">A+</button>
+      <button class="btn-acc" onclick="changeFontSize(-1)" aria-label="Diminuir texto">A-</button>
+      <button class="btn-acc" onclick="resetFontSize()" aria-label="Restaurar texto">Normal</button>
+    </div>
+    
+    <div class="acc-group">
+      <span class="acc-label">Cor da Página:</span>
+      <button class="btn-acc" onclick="setTheme('default')">Padrão</button>
+      <button class="btn-acc" onclick="setTheme('high-contrast')">Alto Contraste</button>
+      <button class="btn-acc" onclick="setTheme('warm')">Modo Leitura</button>
     </div>
   </div>
 
   <!-- Cabeçalho -->
   <header>
     <h1>Conecta Sênior</h1>
-    <p>Seu guia prático, seguro e sem complicações para dominar o uso do celular e da internet.</p>
+    <p>Tecnologia descomplicada, acessível e segura para a melhor idade.</p>
   </header>
 
+  <!-- Navegação por Abas -->
+  <nav class="nav-tabs" role="tablist">
+    <button class="tab-btn active" onclick="switchTab('tab-seguranca', this)">🛡️ Dicas de Segurança</button>
+    <button class="tab-btn" onclick="switchTab('tab-simulador', this)">💬 Simulador Interativo</button>
+    <button class="tab-btn" onclick="switchTab('tab-tutoriais', this)">📲 Passo a Passo</button>
+    <button class="tab-btn" onclick="switchTab('tab-dicionario', this)">📖 Dicionário</button>
+    <button class="tab-btn" onclick="switchTab('tab-links', this)">🔗 Links Úteis</button>
+  </nav>
+
   <main>
+    <!-- ABA 1: SEGURANÇA -->
+    <div id="tab-seguranca" class="tab-content active">
+      <section class="card">
+        <h2>🛡️ Como Navegar com Segurança</h2>
+        <div class="alert-box">
+          <strong>Regra de Ouro:</strong> Bancos e empresas sérias jamais pedem senhas, códigos por SMS ou transferências urgentes via mensagem.
+        </div>
+        <ul class="tips-list">
+          <li><strong>Mensagens de parentes:</strong> Se pedirem dinheiro vindo de um número novo, ligue por voz para o número antigo antes de enviar qualquer valor.</li>
+          <li><strong>Links suspeitos:</strong> Evite clicar em links recebidos por SMS ou WhatsApp que prometem dinheiro fácil ou prêmios.</li>
+          <li><strong>Guarde suas senhas:</strong> Não anote senhas bancárias no próprio celular.</li>
+        </ul>
+        
+        <div class="emergency-box">
+          <h3>🚨 O que fazer se desconfiar de um golpe?</h3>
+          <p>1. Não faça nenhuma transferência.</p>
+          <p>2. Ligue para o número oficial do seu banco (no verso do cartão).</p>
+          <p>3. Converse imediatamente com um familiar de confiança.</p>
+        </div>
+        <button class="btn-speak" onclick="readText('tab-seguranca')">🔊 Ouvir esta seção</button>
+      </section>
+    </div>
 
-    <!-- Seção 1: Cuidados Principais e Plano de Emergência -->
-    <section class="card" id="seguranca">
-      <h2>🛡️ Como se Proteger na Internet</h2>
-      <p>A tecnologia ajuda muito no dia a dia, mas exige alguns cuidados fundamentais:</p>
-      <br>
-      
-      <div class="alert-box">
-        <strong>Regra de Ouro:</strong> Bancos, delegacias, Correios ou o governo NUNCA ligam ou mandam mensagens pedindo senhas, códigos recebidos no celular ou transferências de emergência.
-      </div>
+    <!-- ABA 2: SIMULADOR REALISTA -->
+    <div id="tab-simulador" class="tab-content">
+      <section class="card">
+        <h2>🎭 Simulador de Conversa em Tempo Real</h2>
+        <p>Digite como você responderia a essa mensagem suspeita e receba uma avaliação instantânea de segurança:</p>
+        <br>
 
-      <ul class="tips-list">
-        <li><strong>Dúvidas sobre parentes:</strong> Se receber mensagem de filho ou neto de um número novo pedindo dinheiro, sempre ligue para o número antigo da pessoa para falar por voz antes de transferir qualquer valor.</li>
-        <li><strong>Sorteios e prêmios:</strong> Se receber mensagem dizendo que ganhou um prêmio sem ter se inscrito em nada, é golpe. Não clique em nada.</li>
-        <li><strong>Senhas e anotações:</strong> Não guarde senhas bancárias em papéis junto ao celular ou no bloco de notas do próprio aparelho.</li>
-      </ul>
+        <div style="margin-bottom: 15px;">
+          <label for="scam-selector"><strong>Escolha um cenário para testar:</strong></label>
+          <select id="scam-selector" onchange="loadScenario()" style="padding: 8px; border-radius: 6px; font-size: 1rem; width: 100%; margin-top: 6px;">
+            <option value="0">1. WhatsApp: Falso Filho Pedindo Pix</option>
+            <option value="1">2. SMS: Falso Bloqueio de Banco</option>
+            <option value="2">3. Falso Prêmio de TV</option>
+          </select>
+        </div>
 
-      <!-- O que fazer se caiu em um golpe -->
-      <div class="emergency-box">
-        <h3>🚨 Caiu em um Golpe? Veja o que Fazer Imediatamente:</h3>
-        <ol class="tips-list">
-          <li>Ligue imediatamente para o serviço de atendimento do seu banco para bloquear cartões e o aplicativo.</li>
-          <li>Avise um parente de sua confiança para acompanhar o processo com você.</li>
-          <li>Vá à delegacia mais próxima ou peça ajuda para fazer um Boletim de Ocorrência (BO) pela internet.</li>
-          <li>Troque a senha do seu e-mail e das suas redes sociais.</li>
-        </ol>
-      </div>
-
-      <button class="btn-speak" onclick="readSection('seguranca')">🔊 Ouvir esta seção</button>
-    </section>
-
-    <!-- Seção 2: Simulador Prático -->
-    <section class="card" id="simulador">
-      <h2>🎭 Simulador de Golpes: Treine sem Riscos</h2>
-      <p>Pratique a sua atenção! Veja o exemplo na tela do celular abaixo e clique na opção certa para descobrir como agir:</p>
-    
-      <div class="sim-container">
-        <!-- Moldura de Celular -->
-        <div class="phone-screen">
-          <div class="phone-header">
-            <span id="sim-title">📱 Mensagem Recebida</span>
+        <div class="chat-container">
+          <div class="phone-box">
+            <div class="phone-bar" id="chat-header">📱 Mensagem de Número Desconhecido</div>
+            <div class="chat-messages" id="chat-box">
+              <!-- Mensagens do Chat -->
+            </div>
+            <div class="chat-input-area">
+              <input type="text" id="user-input" placeholder="Digite sua resposta..." onkeypress="handleKeyPress(event)">
+              <button onclick="sendUserMessage()">Enviar</button>
+            </div>
           </div>
-          <div class="phone-body" id="sim-content">
-            <!-- Conteúdo dinâmico via JS -->
+
+          <div id="eval-result" class="evaluation-card" style="display: none;"></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ABA 3: TUTORIAIS -->
+    <div id="tab-tutoriais" class="tab-content">
+      <section class="card">
+        <h2>📲 Passo a Passo para o Dia a Dia</h2>
+        <div class="grid-2">
+          <div class="box-item">
+            <h3>🎙️ Mandar Áudio no WhatsApp</h3>
+            <p>1. Abra a conversa da pessoa.</p>
+            <p>2. Pressione e segure o botão de microfone verde.</p>
+            <p>3. Fale e solte o botão para enviar.</p>
+          </div>
+          <div class="box-item">
+            <h3>📹 Fazer Chamada de Vídeo</h3>
+            <p>1. Entre na conversa com o contato.</p>
+            <p>2. Clique no ícone de câmera no topo da tela.</p>
+            <p>3. Aguarde a pessoa atender.</p>
           </div>
         </div>
+        <button class="btn-speak" onclick="readText('tab-tutoriais')">🔊 Ouvir esta seção</button>
+      </section>
+    </div>
 
-        <!-- Opções -->
-        <div class="sim-actions" id="sim-actions">
-          <!-- Botões via JS -->
+    <!-- ABA 4: DICIONÁRIO -->
+    <div id="tab-dicionario" class="tab-content">
+      <section class="card">
+        <h2>📖 Dicionário Digital</h2>
+        <div class="grid-2">
+          <div class="box-item"><strong>PIX:</strong> Transferência de dinheiro instantânea e gratuita pelo celular.</div>
+          <div class="box-item"><strong>Link:</strong> Endereço de um site em que você clica para abrir a página.</div>
+          <div class="box-item"><strong>Wi-Fi:</strong> Conexão de internet sem fio da sua casa ou estabelecimento.</div>
+          <div class="box-item"><strong>Biometria:</strong> Leitura da digital do dedo ou do rosto para destravar o celular.</div>
         </div>
+      </section>
+    </div>
 
-        <!-- Feedback -->
-        <div id="sim-feedback" class="sim-feedback" style="display: none;"></div>
-      </div>
-
-      <button class="btn-speak" onclick="readSection('simulador')">🔊 Ouvir esta seção</button>
-    </section>
-
-    <!-- Seção 3: Passo a Passo do Dia a Dia -->
-    <section class="card" id="passo-a-passo">
-      <h2>📲 Como Fazer: Tarefas Práticas do Celular</h2>
-      <p>Aprenda a realizar as funções mais utilizadas no aplicativo WhatsApp e na navegação diária:</p>
-      
-      <div class="tutorial-grid">
-        <div class="tutorial-box">
-          <h3>🎙️ Como Mandar Mensagem de Áudio</h3>
-          <p><span class="step-number">1</span> Abra a conversa com a pessoa no WhatsApp.</p>
-          <p><span class="step-number">2</span> Mantenha pressionado o ícone de microfone verde no canto inferior direito.</p>
-          <p><span class="step-number">3</span> Fale a sua mensagem perto do celular e solte o botão para enviar.</p>
-          <p><small style="color: var(--red-700); font-weight: 600;">Dica: Deslize o microfone para cima para travar a gravação sem ter que ficar segurando!</small></p>
+    <!-- ABA 5: LINKS -->
+    <div id="tab-links" class="tab-content">
+      <section class="card">
+        <h2>🔗 Links Úteis e Seguros</h2>
+        <div class="grid-2">
+          <a href="https://www.gov.br" target="_blank" class="box-item" style="text-decoration:none;">
+            <strong>GOV.BR</strong><br><small>Serviços públicos e documentos digitais.</small>
+          </a>
+          <a href="https://meu.inss.gov.br" target="_blank" class="box-item" style="text-decoration:none;">
+            <strong>Meu INSS</strong><br><small>Consulta de extratos e benefícios.</small>
+          </a>
         </div>
-
-        <div class="tutorial-box">
-          <h3>📹 Como Fazer Chamada de Vídeo</h3>
-          <p><span class="step-number">1</span> Entre no WhatsApp da pessoa com quem deseja falar.</p>
-          <p><span class="step-number">2</span> No topo da tela, clique no ícone que se parece com uma pequena <strong>câmera de filmagem</strong>.</p>
-          <p><span class="step-number">3</span> Aguarde a pessoa atender e fale olhando para a câmera no topo do celular.</p>
-        </div>
-
-        <div class="tutorial-box">
-          <h3>🔍 Como Ler um QR Code com a Câmera</h3>
-          <p><span class="step-number">1</span> Abra o aplicativo da Câmera normal do seu celular.</p>
-          <p><span class="step-number">2</span> Aponte a câmera para o quadradinho preto e branco (QR Code) como se fosse tirar uma foto.</p>
-          <p><span class="step-number">3</span> Clique no link ou botão que vai aparecer escrito na tela do aparelho.</p>
-        </div>
-      </div>
-
-      <button class="btn-speak" onclick="readSection('passo-a-passo')">🔊 Ouvir esta seção</button>
-    </section>
-
-    <!-- Seção 4: Dicionário Digital Simplificado -->
-    <section class="card" id="dicionario">
-      <h2>📖 Dicionário Digital: Entenda os Termos</h2>
-      <p>Confira o significado das palavras difíceis que as pessoas usam sobre a internet:</p>
-      
-      <div class="dictionary-list">
-        <div class="dict-item">
-          <strong>PIX:</strong> Forma instantânea de enviar ou receber dinheiro pelo celular sem pagar taxas, a qualquer hora do dia.
-        </div>
-        <div class="dict-item">
-          <strong>LINK:</strong> É um texto (geralmente azul ou sublinhado) que, ao ser clicado, abre uma nova página da internet.
-        </div>
-        <div class="dict-item">
-          <strong>WI-FI:</strong> A internet sem fio da sua casa ou de estabelecimentos comerciais.
-        </div>
-        <div class="dict-item">
-          <strong>SENHA / CÓDIGO PIN:</strong> A chave secreta numérica ou de letras para proteger suas informações pessoais.
-        </div>
-        <div class="dict-item">
-          <strong>BIOMETRIA:</strong> Usar sua digital do dedo ou a foto do seu rosto para destravar o celular ou entrar na conta do banco.
-        </div>
-        <div class="dict-item">
-          <strong>DOWNLOAD (Baixar):</strong> Fazer uma cópia de uma foto, documento ou aplicativo da internet para dentro do seu celular.
-        </div>
-      </div>
-
-      <button class="btn-speak" onclick="readSection('dicionario')">🔊 Ouvir esta seção</button>
-    </section>
-
-    <!-- Seção 5: Links e Redirecionamentos Úteis -->
-    <section class="card">
-      <h2>🔗 Sites Seguros de Utilidade Pública</h2>
-      <p>Acesse diretamente páginas oficiais sem medo de errar o endereço:</p>
-      
-      <div class="links-grid">
-        <a href="https://www.gov.br" target="_blank" class="link-card" rel="noopener">Portal GOV.BR<br><small>(Documentos e Serviços)</small></a>
-        <a href="https://meu.inss.gov.br" target="_blank" class="link-card" rel="noopener">Meu INSS<br><small>(Consultar Benefícios e Extratos)</small></a>
-        <a href="https://registrato.bcb.gov.br" target="_blank" class="link-card" rel="noopener">Banco Central Registrato<br><small>(Verificar contas em seu nome)</small></a>
-        <a href="https://web.whatsapp.com" target="_blank" class="link-card" rel="noopener">WhatsApp Web<br><small>(Usar o aplicativo no computador)</small></a>
-      </div>
-    </section>
-
+      </section>
+    </div>
   </main>
 
   <footer>
-    <p><strong>Conecta Sênior</strong> - Desenvolvido para promover a inclusão digital com segurança, autonomia e respeito à pessoa idosa.</p>
+    <p><strong>Conecta Sênior</strong> — Promovendo inclusão digital, acessibilidade e autonomia.</p>
   </footer>
 
+  <!-- LÓGICA JAVASCRIPT INTEGRADA -->
   <script>
-    let currentScale = 1;
-
-    function changeFontSize(direction) {
-      currentScale += direction * 0.15;
-      if (currentScale < 0.85) currentScale = 0.85;
-      if (currentScale > 1.6) currentScale = 1.6;
-      document.body.style.fontSize = currentScale + 'rem';
+    /* Controle de Abas */
+    function switchTab(tabId, btnElement) {
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      
+      document.getElementById(tabId).classList.add('active');
+      btnElement.classList.add('active');
     }
 
+    /* Controle de Tamanho de Fonte */
+    let fontScale = 1;
+    function changeFontSize(dir) {
+      fontScale += dir * 0.1;
+      fontScale = Math.max(0.8, Math.min(fontScale, 1.5));
+      document.body.style.fontSize = fontScale + 'rem';
+    }
     function resetFontSize() {
-      currentScale = 1;
+      fontScale = 1;
       document.body.style.fontSize = '1rem';
     }
 
-    function readSection(elementId) {
-      const element = document.getElementById(elementId);
+    /* Controle de Temas de Cores */
+    function setTheme(theme) {
+      document.body.classList.remove('theme-high-contrast', 'theme-warm');
+      if (theme === 'high-contrast') document.body.classList.add('theme-high-contrast');
+      if (theme === 'warm') document.body.classList.add('theme-warm');
+    }
+
+    /* Leitor de Voz */
+    function readText(elementId) {
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
-        const textToRead = element.innerText.replace('🔊 Ouvir esta seção', '');
-        const utterance = new SpeechSynthesisUtterance(textToRead);
-        utterance.lang = 'pt-BR';
-        utterance.rate = 0.88;
-        window.speechSynthesis.speak(utterance);
-      } else {
-        alert('Desculpe, seu navegador não suporta a leitura de áudio.');
+        const text = document.getElementById(elementId).innerText.replace(/🔊 Ouvir esta seção/g, '');
+        const utt = new SpeechSynthesisUtterance(text);
+        utt.lang = 'pt-BR';
+        utt.rate = 0.9;
+        window.speechSynthesis.speak(utt);
       }
     }
 
-    const cenarios = [
+    /* Lógica Avançada do Simulador Interativo com Avaliação de Digitação */
+    const scenarios = [
       {
-        titulo: "💬 WhatsApp: Número Desconhecido",
-        mensagem: "<strong>Mensagem recebida:</strong><br><br>'Oi mãe! Troquei de celular, salva esse número novo. Tive um imprevisto e preciso pagar um boleto urgente de R$ 940 até às 16h. Pode me transferir um Pix?'",
-        opcoes: [
-          { texto: "A) Fazer a transferência rápido para ajudar.", correto: false, explicacao: "❌ <strong>Cuidado! Golpe do Falso Filho!</strong> Nunca envie Pix sem ligar por voz para o número antigo do parente para verificar se é verdade." },
-          { texto: "B) Ligar para o número antigo que você já tinha gravado no celular.", correto: true, explicacao: "✅ <strong>Excelente escolha!</strong> Ao ligar para o número antigo do seu parente, você descobrirá que ele não trocou de número e evitará perder dinheiro." },
-          { texto: "C) Enviar a foto do seu cartão de crédito para ajudar.", correto: false, explicacao: "❌ <strong>Muito Perigoso!</strong> Jamais envie fotos do seu cartão de crédito para ninguém na internet." }
-        ]
+        header: "📱 WhatsApp: Contato Desconhecido",
+        initialMsg: "Oi mãe! Troquei de celular, salva o número novo. Preciso pagar um boleto urgente de R$ 890 agora e meu aplicativo do banco travou. Pode fazer um Pix pra mim?",
+        safeKeywords: ["ligar", "telefonar", "quem", "voz", "número antigo", "nao", "não", "espera"],
+        riskKeywords: ["pix", "mando", "envio", "qual a chave", "pago", "beleza", "tá bom", "faço"]
       },
       {
-        titulo: "✉️ SMS: Notificação de Banco",
-        mensagem: "<strong>Mensagem de texto (SMS):</strong><br><br>'BANCO SANTANDER: Conta suspensa por falta de recadastramento. Evite bloqueio da conta clicando em: www.banco-atualizacao-segura.com'",
-        opcoes: [
-          { texto: "A) Clicar no link para regularizar rápido.", correto: false, explicacao: "❌ <strong>Perigoso! Golpe da Falsa Central.</strong> Bancos não mandam links por mensagem para atualizar cadastros ou destravar contas." },
-          { texto: "B) Apagar a mensagem e entrar em contato com o banco pelo número atrás do cartão.", correto: true, explicacao: "✅ <strong>Correto!</strong> Na dúvida sobre sua conta, consulte direto seu gerente ou use o telefone impresso no verso do seu cartão bancário." }
-        ]
+        header: "✉️ SMS: Notificação do Banco",
+        initialMsg: "ALERTA BANCO: Sua conta teve um acesso suspeito. Para evitar o bloqueio, clique imediatamente no link: www.banco-regularize.com",
+        safeKeywords: ["não vou clicar", "ligar pro banco", "banco", "falso", "cartao", "cartão", "ignorar"],
+        riskKeywords: ["cliquei", "ok", "vou entrar", "abrir", "senha", "cpf"]
       },
       {
-        titulo: "📦 SMS: Falso Aviso de Correios",
-        mensagem: "<strong>SMS Recebido:</strong><br><br>'CORREIOS: Sua encomenda está retida na alfândega devido a uma taxa pendente de R$ 18,50. Pague agora pelo link: www.correios-taxa-pagamento.com'",
-        opcoes: [
-          { texto: "A) Clicar no link e pagar a taxa no cartão de crédito.", correto: false, explicacao: "❌ <strong>Golpe da Falsa Entrega!</strong> Golpistas enviam mensagens falsas sobre encomendas para roubar dados do seu cartão." },
-          { texto: "B) Ignorar a mensagem ou verificar no site oficial dos Correios com seu código de rastreio.", correto: true, explicacao: "✅ <strong>Muito bem!</strong> Só verifique suas entregas acessando o site oficial dos Correios por conta própria." }
-        ]
-      },
-      {
-        titulo: "🎁 WhatsApp: Falso Prêmio de TV",
-        mensagem: "<strong>Mensagem recebida:</strong><br><br>'PARABÉNS! Seu número de telefone foi sorteado no programa de TV e você ganhou um prêmio de R$ 10.000,00! Para receber, digite o código de 6 dígitos que enviamos no seu SMS.'",
-        opcoes: [
-          { texto: "A) Mandar o código de 6 dígitos para receber o prêmio.", correto: false, explicacao: "❌ <strong>Cuidado! Golpe do Roubo de WhatsApp!</strong> Esse código de 6 dígitos é a confirmação do seu WhatsApp. Se você passar para eles, eles roubam sua conta." },
-          { texto: "B) Ignorar e bloquear o número, pois você não entrou em sorteio nenhum.", correto: true, explicacao: "✅ <strong>Perfeito!</strong> Ninguém dá prêmios de graça se você não se inscreveu em nada. Nunca passe códigos recebidos por SMS." }
-        ]
-      },
-      {
-        titulo: "💻 Computador: Alerta de Vírus na Tela",
-        mensagem: "<strong>Aviso vermelho piscando na tela:</strong><br><br>'SEU COMPUTADOR ESTÁ INFECTADO COM VÍRUS GRAVE! Ligue imediatamente para o suporte técnico no número 0800-999-0000 para não perder seus dados.'",
-        opcoes: [
-          { texto: "A) Ligue para o 0800 indicado na mensagem.", correto: false, explicacao: "❌ <strong>Golpe do Falso Suporte!</strong> Essa mensagem é falsa e feita para te assustar. Se ligar, eles pedirão acesso remoto para roubar senhas do seu computador." },
-          { texto: "B) Fechar a janela do navegador ou reiniciar o computador.", correto: true, explicacao: "✅ <strong>Resposta Correta!</strong> Apenas feche o navegador ou desligue o computador. Mensagens que travam a tela com alarmes são tentativas de assustar a vítima." }
-        ]
+        header: "🎁 SMS: Prêmio Promocional",
+        mensagem: "PARABÉNS! Você ganhou um prêmio de R$ 5.000 no sorteio! Para resgatar, responda com o código de 6 dígitos que enviamos no seu celular.",
+        safeKeywords: ["nao", "não", "golpe", "mentira", "nao me inscrevi", "código não"],
+        riskKeywords: ["codigo", "código", "mando", "qual o premio", "envio", "obrigado"]
       }
     ];
 
-    let cenarioAtual = 0;
+    let currentScenario = 0;
 
-    function carregarCenario() {
-      const cenario = cenarios[cenarioAtual];
-      const titleElement = document.getElementById('sim-title');
-      const contentDiv = document.getElementById('sim-content');
-      const actionsDiv = document.getElementById('sim-actions');
-      const feedbackDiv = document.getElementById('sim-feedback');
-
-      titleElement.innerText = cenario.titulo;
-      feedbackDiv.style.display = 'none';
-      contentDiv.innerHTML = `<div class="chat-bubble">${cenario.mensagem}</div>`;
-      actionsDiv.innerHTML = '';
-
-      cenario.opcoes.forEach((opcao) => {
-        const btn = document.createElement('button');
-        btn.className = 'btn-choice';
-        btn.innerHTML = opcao.texto;
-        btn.onclick = () => verificarResposta(opcao);
-        actionsDiv.appendChild(btn);
-      });
+    function loadScenario() {
+      currentScenario = parseInt(document.getElementById('scam-selector').value);
+      const scenario = scenarios[currentScenario];
+      
+      document.getElementById('chat-header').innerText = scenario.header;
+      const chatBox = document.getElementById('chat-box');
+      chatBox.innerHTML = `<div class="msg msg-scammer">${scenario.initialMsg}</div>`;
+      
+      document.getElementById('eval-result').style.display = 'none';
+      document.getElementById('user-input').value = '';
     }
 
-    function verificarResposta(opcao) {
-      const feedbackDiv = document.getElementById('sim-feedback');
-      feedbackDiv.style.display = 'block';
+    function handleKeyPress(e) {
+      if (e.key === 'Enter') sendUserMessage();
+    }
+
+    function sendUserMessage() {
+      const inputField = document.getElementById('user-input');
+      const text = inputField.value.trim();
+      if (!text) return;
+
+      const chatBox = document.getElementById('chat-box');
       
-      if (opcao.correto) {
-        feedbackDiv.className = 'sim-feedback feedback-success';
+      // Adiciona mensagem do usuário
+      const userMsgDiv = document.createElement('div');
+      userMsgDiv.className = 'msg msg-user';
+      userMsgDiv.innerText = text;
+      chatBox.appendChild(userMsgDiv);
+      
+      inputField.value = '';
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      // Avalia a resposta do usuário
+      evaluateUserResponse(text.toLowerCase());
+    }
+
+    function evaluateUserResponse(text) {
+      const scenario = scenarios[currentScenario];
+      const evalDiv = document.getElementById('eval-result');
+      evalDiv.style.display = 'block';
+
+      let containsSafe = scenario.safeKeywords.some(kw => text.includes(kw));
+      let containsRisk = scenario.riskKeywords.some(kw => text.includes(kw));
+
+      if (containsSafe && !containsRisk) {
+        evalDiv.className = 'evaluation-card eval-safe';
+        evalDiv.innerHTML = '✅ <strong>Excelente Reação!</strong> Você agiu com cautela, desconfiou ou buscou confirmar a identidade/informação por vias seguras.';
+      } else if (containsRisk) {
+        evalDiv.className = 'evaluation-card eval-danger';
+        evalDiv.innerHTML = '❌ <strong>Atenção ao Risco!</strong> Sua resposta indicou intenção de enviar dados, dinheiro ou clicar no link. Em situações reais, desconfie e nunca faça transferências sem falar por voz!';
       } else {
-        feedbackDiv.className = 'sim-feedback feedback-danger';
+        evalDiv.className = 'evaluation-card eval-warning';
+        evalDiv.innerHTML = '⚠️ <strong>Dica de Segurança:</strong> Em casos assim, a melhor atitude é <strong>não responder</strong> e ligar diretamente para a pessoa ou instituição pelo número oficial.';
       }
-      
-      feedbackDiv.innerHTML = `${opcao.explicacao} <br><button class="btn-next" onclick="proximoCenario()">Próximo Teste ➔</button>`;
     }
 
-    function proximoCenario() {
-      cenarioAtual = (cenarioAtual + 1) % cenarios.length;
-      carregarCenario();
-    }
-
-    window.addEventListener('DOMContentLoaded', carregarCenario);
+    window.addEventListener('DOMContentLoaded', loadScenario);
   </script>
 </body>
 </html>
