@@ -5,91 +5,115 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Conecta Sênior | Portal de Apoio Digital</title>
   <style>
+    /* ==========================================================================
+       1. VARIÁVEIS E PALETA DE CORES (DESIGN TOKENS)
+       ========================================================================== */
     :root {
-      --bg-color: #fcf8f8;
-      --card-bg: #ffffff;
-      --primary-dark: #580a0a;
-      --primary-red: #8b0000;
-      --accent-red: #c92a2a;
-      --light-red: #fff5f5;
-      --border-red: #ffc9c9;
-      --text-color: #2b1f1f;
-      --text-muted: #5c4d4d;
+      /* Palette de Vermelhos: Elegante, Moderno e de Alto Contraste */
+      --red-900: #4a0606; /* Vermelho escuro profundo para textos e cabeçalhos */
+      --red-800: #7a0c0c; /* Vermelho principal para gradientes */
+      --red-700: #9e1212; /* Vermelho tom médio para destaques */
+      --red-600: #c92a2a; /* Vermelho vibrante para botões e ações */
+      --red-100: #fde8e8; /* Vermelho muito claro para fundos de destaque */
+      --red-50:  #fff5f5; /* Tom suave de fundo para blocos legíveis */
+
+      /* Superfícies e Textos */
+      --bg-page: #faf6f6;
+      --bg-card: #ffffff;
+      --text-main: #2d2222;
+      --text-muted: #5e4e4e;
+      --border-color: #f0cece;
+
+      /* Acessibilidade e Tamanho da Fonte */
       --font-scale: 1rem;
-      --shadow-sm: 0 4px 12px rgba(88, 10, 10, 0.05);
-      --shadow-md: 0 8px 24px rgba(88, 10, 10, 0.08);
-      --radius: 16px;
+      --font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+
+      /* Cantos Arredondados e Sombras Suaves */
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 24px;
+      --shadow-sm: 0 4px 12px rgba(74, 6, 6, 0.04);
+      --shadow-md: 0 10px 25px rgba(74, 6, 6, 0.08);
+      --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    * {
+    /* ==========================================================================
+       2. RESET E CONFIGURAÇÕES GERAIS
+       ========================================================================== */
+    *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-color);
+      font-family: var(--font-family);
+      background-color: var(--bg-page);
+      color: var(--text-main);
       font-size: var(--font-scale);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Barra Fixa de Acessibilidade */
+    /* ==========================================================================
+       3. BARRA FIXA DE ACESSIBILIDADE
+       ========================================================================== */
     .accessibility-bar {
-      background: var(--primary-dark);
+      background-color: var(--red-900);
       color: #ffffff;
-      padding: 14px 24px;
+      padding: 12px 24px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       position: sticky;
       top: 0;
       z-index: 1000;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(10px);
     }
 
     .acc-buttons {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
     }
 
     .btn-acc {
       background: #ffffff;
-      color: var(--primary-dark);
+      color: var(--red-900);
       border: none;
       padding: 8px 18px;
       font-weight: 700;
       font-size: 0.95rem;
-      border-radius: 30px;
+      border-radius: 50px;
       cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      transition: var(--transition);
     }
 
-    .btn-acc:hover, .btn-acc:focus {
-      background-color: var(--accent-red);
+    .btn-acc:hover, 
+    .btn-acc:focus {
+      background-color: var(--red-600);
       color: #ffffff;
-      transform: translateY(-1px);
-      outline: 3px solid #ffdede;
+      transform: translateY(-2px);
+      outline: 3px solid #ffc9c9;
     }
 
-    /* Cabeçalho */
+    /* ==========================================================================
+       4. CABEÇALHO PRINCIPAL
+       ========================================================================== */
     header {
-      background: linear-gradient(145deg, var(--primary-dark) 0%, var(--primary-red) 100%);
-      color: white;
+      background: linear-gradient(135deg, var(--red-900) 0%, var(--red-700) 100%);
+      color: #ffffff;
       text-align: center;
       padding: 60px 20px;
-      border-bottom-left-radius: 32px;
-      border-bottom-right-radius: 32px;
+      border-bottom-left-radius: var(--radius-lg);
+      border-bottom-right-radius: var(--radius-lg);
       box-shadow: var(--shadow-md);
     }
 
     header h1 {
-      font-size: 2.6em;
+      font-size: 2.75em;
       font-weight: 800;
       letter-spacing: -0.5px;
       margin-bottom: 12px;
@@ -99,11 +123,13 @@
       font-size: 1.25em;
       max-width: 720px;
       margin: 0 auto;
-      color: #ffdede;
+      color: #ffe0e0;
       font-weight: 400;
     }
 
-    /* Layout Principal */
+    /* ==========================================================================
+       5. ESTRUTURA PRINCIPAL E CARDS DE CONTEÚDO
+       ========================================================================== */
     main {
       max-width: 1000px;
       margin: 40px auto;
@@ -113,56 +139,58 @@
       gap: 32px;
     }
 
-    /* Cards Elegantes */
     .card {
-      background: var(--card-bg);
-      border-radius: var(--radius);
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
       padding: 36px;
       box-shadow: var(--shadow-sm);
-      border: 1px solid rgba(139, 0, 0, 0.08);
-      transition: box-shadow 0.3s ease;
+      border: 1px solid var(--border-color);
+      transition: var(--transition);
     }
 
     .card:hover {
       box-shadow: var(--shadow-md);
+      border-color: #e5b3b3;
     }
 
     .card h2 {
-      color: var(--primary-dark);
-      font-size: 1.75em;
+      color: var(--red-900);
+      font-size: 1.8em;
       margin-bottom: 20px;
       display: flex;
       align-items: center;
       gap: 12px;
     }
 
-    /* Dicas e Alertas */
+    /* ==========================================================================
+       6. BLOCOS DE ALERTAS E DICAS DE SEGURANÇA
+       ========================================================================== */
     .alert-box {
-      background-color: var(--light-red);
-      border-left: 6px solid var(--accent-red);
+      background-color: var(--red-50);
+      border-left: 6px solid var(--red-600);
       padding: 20px;
-      border-radius: 12px;
+      border-radius: var(--radius-sm);
       margin-bottom: 24px;
       font-size: 1.05em;
     }
 
     .emergency-box {
-      background: linear-gradient(135deg, var(--primary-dark), #380000);
+      background: linear-gradient(145deg, var(--red-900), #2e0404);
       color: #ffffff;
-      padding: 28px;
-      border-radius: var(--radius);
+      padding: 30px;
+      border-radius: var(--radius-md);
       margin-top: 28px;
-      box-shadow: var(--shadow-sm);
+      box-shadow: var(--shadow-md);
     }
 
     .emergency-box h3 {
       color: #ffcccc;
-      font-size: 1.3em;
+      font-size: 1.35em;
       margin-bottom: 16px;
     }
 
     .tips-list {
-      list-style-type: none;
+      list-style: none;
     }
 
     .tips-list li {
@@ -177,8 +205,8 @@
       position: absolute;
       left: 0;
       top: 2px;
-      background: var(--light-red);
-      color: var(--accent-red);
+      background: var(--red-100);
+      color: var(--red-700);
       font-weight: bold;
       width: 24px;
       height: 24px;
@@ -186,27 +214,27 @@
       text-align: center;
       line-height: 24px;
       font-size: 0.85em;
-      border: 1px solid var(--border-red);
     }
 
     .emergency-box .tips-list li::before {
       background: rgba(255, 255, 255, 0.15);
       color: #ffffff;
-      border: none;
     }
 
-    /* Simulador de Celular */
+    /* ==========================================================================
+       7. SIMULADOR INTERATIVO DE CELULAR
+       ========================================================================== */
     .sim-container {
-      background-color: #fbf5f5;
-      border: 1px solid var(--border-red);
-      border-radius: 20px;
+      background-color: var(--red-50);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
       padding: 28px;
       margin: 24px 0;
     }
 
     .phone-screen {
       background-color: #ffffff;
-      border: 8px solid #2b1f1f;
+      border: 8px solid #201818;
       border-radius: 28px;
       overflow: hidden;
       max-width: 420px;
@@ -215,29 +243,29 @@
     }
 
     .phone-header {
-      background-color: var(--primary-dark);
-      color: white;
+      background-color: var(--red-900);
+      color: #ffffff;
       padding: 14px;
       text-align: center;
       font-weight: 600;
       font-size: 0.95em;
-      letter-spacing: 0.3px;
+      letter-spacing: 0.5px;
     }
 
     .phone-body {
       padding: 24px;
       min-height: 160px;
-      background-color: #fcfcfc;
+      background-color: #fafafa;
     }
 
     .chat-bubble {
       background-color: #ffffff;
-      border: 1px solid #eee;
-      border-left: 4px solid var(--accent-red);
-      padding: 16px;
-      border-radius: 12px;
+      border: 1px solid #e8e8e8;
+      border-left: 5px solid var(--red-600);
+      padding: 18px;
+      border-radius: var(--radius-sm);
       font-size: 1.05em;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
     }
 
     .sim-actions {
@@ -250,22 +278,23 @@
 
     .btn-choice {
       background-color: #ffffff;
-      color: var(--text-color);
-      border: 2px solid var(--border-red);
+      color: var(--text-main);
+      border: 2px solid var(--border-color);
       padding: 16px 20px;
-      border-radius: 12px;
+      border-radius: var(--radius-sm);
       font-size: 1.05em;
       font-weight: 600;
       cursor: pointer;
       text-align: left;
-      transition: all 0.2s ease;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+      transition: var(--transition);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
     }
 
-    .btn-choice:hover, .btn-choice:focus {
-      background-color: var(--primary-dark);
+    .btn-choice:hover, 
+    .btn-choice:focus {
+      background-color: var(--red-900);
       color: #ffffff;
-      border-color: var(--primary-dark);
+      border-color: var(--red-900);
       transform: translateY(-2px);
     }
 
@@ -273,7 +302,7 @@
       max-width: 420px;
       margin: 20px auto 0 auto;
       padding: 18px;
-      border-radius: 12px;
+      border-radius: var(--radius-sm);
       font-size: 1.05em;
       font-weight: 600;
       line-height: 1.5;
@@ -286,30 +315,32 @@
     }
 
     .feedback-danger {
-      background-color: var(--light-red);
-      color: #c5221f;
-      border: 1px solid var(--border-red);
+      background-color: var(--red-100);
+      color: var(--red-900);
+      border: 1px solid var(--border-color);
     }
 
     .btn-next {
       display: block;
       margin: 16px auto 0 auto;
-      background: var(--primary-red);
-      color: white;
+      background: var(--red-700);
+      color: #ffffff;
       border: none;
       padding: 12px 28px;
-      border-radius: 30px;
+      border-radius: 50px;
       font-size: 0.95rem;
       font-weight: 700;
       cursor: pointer;
-      transition: background 0.2s ease;
+      transition: var(--transition);
     }
 
     .btn-next:hover {
-      background: var(--accent-red);
+      background: var(--red-600);
     }
 
-    /* Guias Passo a Passo */
+    /* ==========================================================================
+       8. GUIAS PASSO A PASSO E DICIONÁRIO DIGITAL
+       ========================================================================== */
     .tutorial-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -318,9 +349,9 @@
     }
 
     .tutorial-box {
-      background-color: var(--light-red);
-      border: 1px solid var(--border-red);
-      border-radius: var(--radius);
+      background-color: var(--red-50);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
       padding: 24px;
       display: flex;
       flex-direction: column;
@@ -328,7 +359,7 @@
     }
 
     .tutorial-box h3 {
-      color: var(--primary-dark);
+      color: var(--red-900);
       font-size: 1.2em;
     }
 
@@ -336,8 +367,8 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      background: var(--primary-red);
-      color: white;
+      background: var(--red-700);
+      color: #ffffff;
       width: 24px;
       height: 24px;
       border-radius: 50%;
@@ -346,7 +377,6 @@
       margin-right: 6px;
     }
 
-    /* Dicionário Digital */
     .dictionary-list {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -356,20 +386,22 @@
 
     .dict-item {
       background: #ffffff;
-      border: 1px solid var(--border-red);
-      padding: 18px;
-      border-radius: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+      border: 1px solid var(--border-color);
+      padding: 20px;
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-sm);
     }
 
     .dict-item strong {
-      color: var(--primary-red);
+      color: var(--red-700);
       font-size: 1.1em;
       display: block;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
-    /* Grade de Links */
+    /* ==========================================================================
+       9. GRADE DE LINKS ÚTEIS
+       ========================================================================== */
     .links-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -379,15 +411,15 @@
 
     .link-card {
       background: #ffffff;
-      color: var(--primary-dark);
-      border: 2px solid var(--border-red);
+      color: var(--red-900);
+      border: 2px solid var(--border-color);
       text-decoration: none;
       padding: 22px;
-      border-radius: 14px;
+      border-radius: var(--radius-md);
       text-align: center;
       font-weight: 700;
       font-size: 1.1em;
-      transition: all 0.2s ease;
+      transition: var(--transition);
       display: block;
     }
 
@@ -399,51 +431,57 @@
       color: var(--text-muted);
     }
 
-    .link-card:hover, .link-card:focus {
-      background: var(--primary-red);
+    .link-card:hover, 
+    .link-card:focus {
+      background: var(--red-700);
       color: #ffffff;
-      border-color: var(--primary-red);
-      transform: translateY(-3px);
+      border-color: var(--red-700);
+      transform: translateY(-4px);
       box-shadow: var(--shadow-sm);
     }
 
-    .link-card:hover small, .link-card:focus small {
-      color: #ffdede;
+    .link-card:hover small, 
+    .link-card:focus small {
+      color: #ffe0e0;
     }
 
-    /* Botão de Leitura de Voz */
+    /* ==========================================================================
+       10. BOTÕES DE ÁUDIO E RODAPÉ
+       ========================================================================== */
     .btn-speak {
-      background: var(--light-red);
-      color: var(--primary-red);
-      border: 1px solid var(--border-red);
-      padding: 10px 20px;
-      border-radius: 30px;
+      background: var(--red-100);
+      color: var(--red-900);
+      border: 1px solid var(--border-color);
+      padding: 12px 22px;
+      border-radius: 50px;
       cursor: pointer;
       font-size: 0.95rem;
       font-weight: 700;
       margin-top: 20px;
-      transition: all 0.2s ease;
+      transition: var(--transition);
       display: inline-flex;
       align-items: center;
       gap: 8px;
     }
 
     .btn-speak:hover {
-      background: var(--primary-red);
+      background: var(--red-700);
       color: #ffffff;
     }
 
-    /* Rodapé */
     footer {
-      background-color: var(--primary-dark);
-      color: #ffdede;
+      background-color: var(--red-900);
+      color: #ffe0e0;
       text-align: center;
       padding: 40px 20px;
       margin-top: 60px;
-      border-top-left-radius: 32px;
-      border-top-right-radius: 32px;
+      border-top-left-radius: var(--radius-lg);
+      border-top-right-radius: var(--radius-lg);
     }
 
+    /* ==========================================================================
+       11. RESPONSIVIDADE
+       ========================================================================== */
     @media (max-width: 768px) {
       .accessibility-bar {
         flex-direction: column;
@@ -512,7 +550,7 @@
       <button class="btn-speak" onclick="readSection('seguranca')">🔊 Ouvir esta seção</button>
     </section>
 
-    <!-- Seção 2: Simulador Prático (Vários Golpes Realistas) -->
+    <!-- Seção 2: Simulador Prático -->
     <section class="card" id="simulador">
       <h2>🎭 Simulador de Golpes: Treine sem Riscos</h2>
       <p>Pratique a sua atenção! Veja o exemplo na tela do celular abaixo e clique na opção certa para descobrir como agir:</p>
@@ -551,7 +589,7 @@
           <p><span class="step-number">1</span> Abra a conversa com a pessoa no WhatsApp.</p>
           <p><span class="step-number">2</span> Mantenha pressionado o ícone de microfone verde no canto inferior direito.</p>
           <p><span class="step-number">3</span> Fale a sua mensagem perto do celular e solte o botão para enviar.</p>
-          <p><small style="color: var(--accent-red); font-weight: 600;">Dica: Deslize o microfone para cima para travar a gravação sem ter que ficar segurando!</small></p>
+          <p><small style="color: var(--red-700); font-weight: 600;">Dica: Deslize o microfone para cima para travar a gravação sem ter que ficar segurando!</small></p>
         </div>
 
         <div class="tutorial-box">
