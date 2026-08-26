@@ -13,6 +13,13 @@
       --accent-red: #b30000;
       --text-color: #2b1a1a;
       --font-scale: 1rem;
+      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 12px rgba(128, 0, 0, 0.08);
+      --shadow-lg: 0 8px 20px rgba(128, 0, 0, 0.12);
+      --transition-fast: all 0.2s ease;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
     }
 
     * {
@@ -29,13 +36,11 @@
       line-height: 1.6;
     }
 
-    /* Rola a página suavemente e deixa espaço para o menu fixo */
     html {
       scroll-behavior: smooth;
       scroll-padding-top: 140px;
     }
 
-    /* Modo de Alto Contraste para melhor visualização */
     body.high-contrast {
       --bg-color: #121212;
       --card-bg: #1e1e1e;
@@ -62,14 +67,14 @@
     body.high-contrast .btn-acc,
     body.high-contrast .nav-btn,
     body.high-contrast .btn-speak,
-    body.high-contrast .link-card {
+    body.high-contrast .link-card,
+    body.high-contrast .btn-choice {
       background: #ffd700;
       color: #000000;
       border: 2px solid #ffffff;
       font-weight: bold;
     }
 
-    /* Barra de Acessibilidade Fixa */
     .accessibility-bar {
       background-color: var(--primary-dark);
       color: #ffffff;
@@ -80,7 +85,7 @@
       position: sticky;
       top: 0;
       z-index: 1000;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
       flex-wrap: wrap;
       gap: 10px;
     }
@@ -98,21 +103,21 @@
       padding: 8px 14px;
       font-weight: 600;
       font-size: 0.95rem;
-      border-radius: 8px;
+      border-radius: var(--radius-sm);
       cursor: pointer;
-      transition: all 0.2s ease;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      transition: var(--transition-fast);
+      box-shadow: var(--shadow-sm);
     }
 
-    .btn-acc:hover, .btn-acc:focus {
+    .btn-acc:hover, 
+    .btn-acc:focus {
       background-color: #ffffff;
       color: var(--primary-red);
       transform: translateY(-1px);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      box-shadow: var(--shadow-md);
       outline: 2px solid var(--accent-red);
     }
 
-    /* Menu de Navegação Direta entre Seções */
     .nav-bar {
       background-color: var(--primary-red);
       display: flex;
@@ -123,7 +128,7 @@
       position: sticky;
       top: 55px;
       z-index: 999;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
       flex-wrap: wrap;
     }
 
@@ -135,23 +140,23 @@
       border-radius: 24px;
       font-weight: 600;
       font-size: 0.98rem;
-      transition: all 0.2s ease;
+      transition: var(--transition-fast);
       display: inline-flex;
       align-items: center;
       gap: 6px;
       border: 1px solid transparent;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+      box-shadow: var(--shadow-sm);
     }
 
-    .nav-btn:hover, .nav-btn:focus {
+    .nav-btn:hover, 
+    .nav-btn:focus {
       background-color: #ffffff;
       color: var(--accent-red);
       transform: translateY(-2px);
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+      box-shadow: var(--shadow-md);
       outline: none;
     }
 
-    /* Cabeçalho Principal */
     header {
       background: linear-gradient(135deg, var(--primary-dark), var(--primary-red));
       color: #ffffff;
@@ -172,7 +177,6 @@
       color: #ffdede;
     }
 
-    /* Conteúdo Principal */
     main {
       max-width: 1100px;
       margin: 40px auto;
@@ -185,9 +189,9 @@
     .card {
       background: var(--card-bg);
       border-left: 8px solid var(--primary-red);
-      border-radius: 12px;
+      border-radius: var(--radius-md);
       padding: 30px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      box-shadow: var(--shadow-sm);
     }
 
     .card h2 {
@@ -199,12 +203,11 @@
       gap: 10px;
     }
 
-    /* Seção Guia de Segurança */
     .alert-box {
       background-color: #fff0f0;
       border: 2px solid var(--accent-red);
       padding: 20px;
-      border-radius: 8px;
+      border-radius: var(--radius-sm);
       margin-bottom: 20px;
     }
 
@@ -234,7 +237,6 @@
       font-size: 0.9em;
     }
 
-    /* Grid de Links e Redirecionamentos */
     .links-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -247,13 +249,13 @@
       color: var(--primary-dark);
       text-decoration: none;
       padding: 22px;
-      border-radius: 12px;
+      border-radius: var(--radius-md);
       text-align: center;
       font-weight: 700;
       font-size: 1.15em;
       border: 1px solid #eae0e0;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-      transition: all 0.25s ease;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition-fast);
       display: block;
     }
 
@@ -265,16 +267,16 @@
       color: #665555;
     }
 
-    .link-card:hover, .link-card:focus {
+    .link-card:hover, 
+    .link-card:focus {
       background: #ffffff;
       border-color: var(--primary-red);
       color: var(--primary-red);
       transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(128, 0, 0, 0.12);
+      box-shadow: var(--shadow-lg);
       outline: none;
     }
 
-    /* Botão de Leitura de Voz */
     .btn-speak {
       background: var(--primary-red);
       color: #ffffff;
@@ -285,22 +287,22 @@
       font-size: 1rem;
       font-weight: 600;
       margin-top: 15px;
-      transition: all 0.2s ease;
+      transition: var(--transition-fast);
       box-shadow: 0 3px 8px rgba(128, 0, 0, 0.2);
     }
 
-    .btn-speak:hover, .btn-speak:focus {
+    .btn-speak:hover, 
+    .btn-speak:focus {
       background: var(--accent-red);
       transform: translateY(-2px);
       box-shadow: 0 5px 14px rgba(179, 0, 0, 0.3);
       outline: none;
     }
 
-    /* Estilos do Simulador Prático */
     .sim-container {
       background-color: #f4ecec;
       border: 2px solid var(--primary-red);
-      border-radius: 12px;
+      border-radius: var(--radius-md);
       padding: 20px;
       margin: 20px 0;
     }
@@ -312,7 +314,7 @@
       overflow: hidden;
       max-width: 500px;
       margin: 0 auto 20px auto;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
 
     .phone-header {
@@ -332,7 +334,7 @@
       background-color: #f0f0f0;
       border-left: 5px solid var(--accent-red);
       padding: 15px;
-      border-radius: 8px;
+      border-radius: var(--radius-sm);
       font-size: 1.1em;
     }
 
@@ -354,16 +356,17 @@
       font-weight: 600;
       cursor: pointer;
       text-align: left;
-      transition: all 0.2s ease;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+      transition: var(--transition-fast);
+      box-shadow: var(--shadow-sm);
     }
 
-    .btn-choice:hover, .btn-choice:focus {
+    .btn-choice:hover, 
+    .btn-choice:focus {
       background-color: #fff8f8;
       border-color: var(--primary-red);
       color: var(--primary-dark);
       transform: translateX(4px);
-      box-shadow: 0 4px 12px rgba(128, 0, 0, 0.1);
+      box-shadow: var(--shadow-md);
       outline: none;
     }
 
@@ -371,7 +374,7 @@
       max-width: 500px;
       margin: 20px auto 0 auto;
       padding: 15px;
-      border-radius: 8px;
+      border-radius: var(--radius-sm);
       font-size: 1.1em;
       font-weight: bold;
     }
@@ -395,22 +398,22 @@
       color: #ffffff;
       border: none;
       padding: 11px 24px;
-      border-radius: 20px;
+      border-radius: var(--radius-lg);
       font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: var(--transition-fast);
       box-shadow: 0 3px 8px rgba(128, 0, 0, 0.2);
     }
 
-    .btn-next:hover, .btn-next:focus {
+    .btn-next:hover, 
+    .btn-next:focus {
       background: var(--accent-red);
       transform: translateY(-2px);
       box-shadow: 0 5px 12px rgba(179, 0, 0, 0.3);
       outline: none;
     }
 
-    /* Rodapé */
     footer {
       background-color: var(--primary-dark);
       color: #ffdede;
@@ -419,7 +422,6 @@
       margin-top: 50px;
     }
 
-    /* Responsividade */
     @media (max-width: 768px) {
       .accessibility-bar {
         flex-direction: column;
@@ -505,6 +507,58 @@
       <p>Acesse diretamente os serviços oficiais mais utilizados com apenas um clique:</p>
       
       <div class="links-grid">
+        <a href="https://www.gov.br" target="_blank" rel="noopener noreferrer" class="link-card">
+          🏛️ Portal GOV.BR
+          <small>Serviços públicos e documentos digitais</small>
+        </a>
+        <a href="https://meu.inss.gov.br" target="_blank" rel="noopener noreferrer" class="link-card">
+          👵 Meu INSS
+          <small>Extratos, benefícios e aposentadoria</small>
+        </a>
+        <a href="https://web.whatsapp.com" target="_blank" rel="noopener noreferrer" class="link-card">
+          💬 WhatsApp Web
+          <small>Conecte seu WhatsApp no computador</small>
+        </a>
+        <a href="https://www.bcb.gov.br" target="_blank" rel="noopener noreferrer" class="link-card">
+          🏦 Banco Central / Registrato
+          <small>Consulte chaves Pix e contas em seu nome</small>
+        </a>
+      </div>
+
+      <button class="btn-speak" onclick="readSection('links')">🔊 Ouvir esta seção</button>
+    </section>
+
+    <!-- Seção 4: Simulador Prático -->
+    <section class="card" id="simulador">
+      <h2>🎭 Simulador Prático de Golpes</h2>
+      <p>Treine sua atenção! Leia a situação simulada abaixo no celular e escolha a melhor atitude a tomar:</p>
+      <br>
+
+      <div class="sim-container">
+        <div class="phone-screen">
+          <div class="phone-header">📱 Tela do Celular (Simulação)</div>
+          <div class="phone-body" id="sim-content">
+            <!-- Conteúdo dinâmico da mensagem -->
+          </div>
+        </div>
+
+        <div class="sim-actions" id="sim-actions">
+          <!-- Botões de escolha -->
+        </div>
+
+        <div id="sim-feedback" class="sim-feedback" style="display: none;"></div>
+      </div>
+
+      <button class="btn-speak" onclick="readSection('simulador')">🔊 Ouvir esta seção</button>
+    </section>
+
+  </main>
+
+  <!-- Rodapé -->
+  <footer>
+    <p>Conecta Sênior &copy; 2026 - Tecnologia e inclusão com segurança para a melhor idade.</p>
+  </footer>
+
   <!-- Scripts de Acessibilidade, Voz Natural e Simulação -->
   <script>
     let currentScale = 1;
