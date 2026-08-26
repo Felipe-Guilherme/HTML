@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <link rel="stylesheet" href="styles.css">
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Conecta Sênior | Tecnologia Descomplicada</title>
   <style>
@@ -177,6 +176,106 @@
       outline: 3px solid #000;
     }
 
+    /* Estilos do Simulador Prático */
+    .sim-container {
+      background-color: #f4ecec;
+      border: 2px solid var(--primary-red);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .phone-screen {
+      background-color: #ffffff;
+      border: 3px solid var(--primary-dark);
+      border-radius: 15px;
+      overflow: hidden;
+      max-width: 450px;
+      margin: 0 auto 20px auto;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .phone-header {
+      background-color: var(--primary-dark);
+      color: white;
+      padding: 10px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .phone-body {
+      padding: 20px;
+      min-height: 150px;
+    }
+
+    .chat-bubble {
+      background-color: #f0f0f0;
+      border-left: 5px solid var(--accent-red);
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 1.1em;
+    }
+
+    .sim-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 450px;
+      margin: 0 auto;
+    }
+
+    .btn-choice {
+      background-color: var(--primary-dark);
+      color: white;
+      border: none;
+      padding: 15px 20px;
+      border-radius: 8px;
+      font-size: 1.1em;
+      font-weight: bold;
+      cursor: pointer;
+      text-align: left;
+      transition: background-color 0.2s;
+    }
+
+    .btn-choice:hover, .btn-choice:focus {
+      background-color: var(--accent-red);
+      outline: 3px solid #ffcccc;
+    }
+
+    .sim-feedback {
+      max-width: 450px;
+      margin: 20px auto 0 auto;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 1.1em;
+      font-weight: bold;
+    }
+
+    .feedback-success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 2px solid #c3e6cb;
+    }
+
+    .feedback-danger {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 2px solid #f5c6cb;
+    }
+
+    .btn-next {
+      display: block;
+      margin: 15px auto 0 auto;
+      background: var(--primary-red);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
     /* Botão de Leitura de Voz */
     .btn-speak {
       background: var(--primary-red);
@@ -281,13 +380,41 @@
       </div>
     </section>
 
+    <!-- Seção 4: Simulador Prático -->
+    <section class="card" id="simulador">
+      <h2>🎭 Simulador Prático: Teste Seus Conhecimentos</h2>
+      <p>Treine como agir em situações reais sem nenhum risco. Leia o cenário abaixo e escolha a melhor atitude:</p>
+    
+      <div class="sim-container">
+        <!-- Tela do Celular Simulado -->
+        <div class="phone-screen">
+          <div class="phone-header">
+            <span>📱 Mensagem Recebida</span>
+          </div>
+          <div class="phone-body" id="sim-content">
+            <!-- O conteúdo da simulação é inserido via JS -->
+          </div>
+        </div>
+
+        <!-- Opções de Resposta -->
+        <div class="sim-actions" id="sim-actions">
+          <!-- Botões inseridos via JS -->
+        </div>
+
+        <!-- Mensagem de Feedback -->
+        <div id="sim-feedback" class="sim-feedback" style="display: none;"></div>
+      </div>
+
+      <button class="btn-speak" onclick="readSection('simulador')">🔊 Ouvir esta seção</button>
+    </section>
+
   </main>
 
   <footer>
     <p><strong>Conecta Sênior</strong> - Desenvolvido para promover a inclusão digital com segurança e respeito.</p>
   </footer>
 
-  <!-- Scripts de Acessibilidade -->
+  <!-- Scripts de Acessibilidade e Interatividade -->
   <script>
     let currentScale = 1;
 
@@ -306,16 +433,75 @@
     function readSection(elementId) {
       const element = document.getElementById(elementId);
       if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel(); // Para leituras anteriores
+        window.speechSynthesis.cancel();
         const textToRead = element.innerText.replace('🔊 Ouvir esta seção', '');
         const utterance = new SpeechSynthesisUtterance(textToRead);
         utterance.lang = 'pt-BR';
-        utterance.rate = 0.9; // Leitura um pouco mais lenta para facilitar o entendimento
+        utterance.rate = 0.9;
         window.speechSynthesis.speak(utterance);
       } else {
         alert('Desculpe, seu navegador não suporta a leitura de voz.');
       }
     }
+
+    const cenarios = [
+      {
+        mensagem: "💬 <strong>WhatsApp de Número Desconhecido:</strong><br><br>'Oi mãe/pai! Troquei de número, salva aí. Tive um problema no banco e preciso pagar uma conta urgente de R$ 850. Pode fazer um Pix pra mim?'",
+        opcoes: [
+          { texto: "A) Fazer o Pix rapidamente para ajudar.", correto: false, explicacao: "❌ <strong>Cuidado!</strong> Este é o golpe do falso filho. Nunca envie dinheiro sem falar por voz com a pessoa antes." },
+          { texto: "B) Ligar para o número antigo do seu filho para confirmar.", correto: true, explicacao: "✅ <strong>Excelente decisão!</strong> Sempre confirme a identidade da pessoa usando o número de telefone que você já tinha gravado." },
+          { texto: "C) Responder pedindo a senha do banco dele.", correto: false, explicacao: "❌ <strong>Atenção:</strong> Não responda a golpistas. A melhor atitude é ligar para o número antigo do parente." }
+        ]
+      },
+      {
+        mensagem: "✉️ <strong>SMS Recebido:</strong><br><br>'SEU BANCO: Sua conta foi bloqueada por suspeita de fraude. Clique no link para recadastrar: www.banco-seguro-atualiza.com'",
+        opcoes: [
+          { texto: "A) Clicar no link imediatamente para desbloquear.", correto: false, explicacao: "❌ <strong>Perigoso!</strong> Bancos não enviam links por SMS para recadastramento." },
+          { texto: "B) Ignorar a mensagem e entrar em contato com o banco pelo número no verso do cartão.", correto: true, explicacao: "✅ <strong>Correto!</strong> Na dúvida, use apenas o aplicativo oficial ou ligue para o número do verso do seu cartão bancário." }
+        ]
+      }
+    ];
+
+    let cenarioAtual = 0;
+
+    function carregarCenario() {
+      const cenario = cenarios[cenarioAtual];
+      const contentDiv = document.getElementById('sim-content');
+      const actionsDiv = document.getElementById('sim-actions');
+      const feedbackDiv = document.getElementById('sim-feedback');
+
+      feedbackDiv.style.display = 'none';
+      contentDiv.innerHTML = `<div class="chat-bubble">${cenario.mensagem}</div>`;
+      actionsDiv.innerHTML = '';
+
+      cenario.opcoes.forEach((opcao) => {
+        const btn = document.createElement('button');
+        btn.className = 'btn-choice';
+        btn.innerHTML = opcao.texto;
+        btn.onclick = () => verificarResposta(opcao);
+        actionsDiv.appendChild(btn);
+      });
+    }
+
+    function verificarResposta(opcao) {
+      const feedbackDiv = document.getElementById('sim-feedback');
+      feedbackDiv.style.display = 'block';
+      
+      if (opcao.correto) {
+        feedbackDiv.className = 'sim-feedback feedback-success';
+      } else {
+        feedbackDiv.className = 'sim-feedback feedback-danger';
+      }
+      
+      feedbackDiv.innerHTML = `${opcao.explicacao} <br><button class="btn-next" onclick="proximoCenario()">Próximo Teste ➔</button>`;
+    }
+
+    function proximoCenario() {
+      cenarioAtual = (cenarioAtual + 1) % cenarios.length;
+      carregarCenario();
+    }
+
+    window.addEventListener('DOMContentLoaded', carregarCenario);
   </script>
 </body>
 </html>
