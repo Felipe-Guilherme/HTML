@@ -3,537 +3,664 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Conecta Sênior | Portal de Apoio Digital Interativo</title>
+  <title>Conecta Sênior | Tecnologia Descomplicada</title>
   <style>
     :root {
-      --bg-page: #faf7f7;
-      --bg-card: #ffffff;
-      --text-main: #2d2424;
-      --text-muted: #665555;
-      --red-dark: #4a0808;
-      --red-main: #8c1c1c;
-      --red-accent: #c92a2a;
-      --red-light: #fff5f5;
-      --red-border: #f8c4c4;
+      --bg-color: #fdf8f8;
+      --card-bg: #ffffff;
+      --primary-dark: #4a0000;
+      --primary-red: #800000;
+      --accent-red: #b30000;
+      --text-color: #2b1a1a;
       --font-scale: 1rem;
-      --radius-lg: 16px;
-      --radius-md: 10px;
     }
 
-    /* Temas de Visualização Personalizados */
-    body.theme-high-contrast {
-      --bg-page: #000000;
-      --bg-card: #121212;
-      --text-main: #ffff00;
-      --text-muted: #ffffff;
-      --red-dark: #ffff00;
-      --red-main: #ffcc00;
-      --red-accent: #ffffff;
-      --red-light: #222200;
-      --red-border: #ffff00;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    body.theme-warm {
-      --bg-page: #fbf0d9;
-      --bg-card: #fff9ed;
-      --text-main: #432818;
-      --text-muted: #6f4e37;
-      --red-dark: #6b2d0c;
-      --red-main: #9c4114;
-      --red-accent: #bc4749;
-      --red-light: #f7e1d7;
-      --red-border: #e6b8a2;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: system-ui, -apple-system, sans-serif;
-      background-color: var(--bg-page);
-      color: var(--text-main);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
       font-size: var(--font-scale);
       line-height: 1.6;
     }
 
-    /* Barra Fixa de Acessibilidade Ampliada */
-    .accessibility-bar {
-      background-color: var(--red-dark);
+    /* Rola a página suavemente e deixa espaço para o menu fixo */
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 140px;
+    }
+
+    /* Modo de Alto Contraste para melhor visualização */
+    body.high-contrast {
+      --bg-color: #121212;
+      --card-bg: #1e1e1e;
+      --primary-dark: #000000;
+      --primary-red: #ffd700;
+      --accent-red: #ffff00;
+      --text-color: #ffffff;
+      background-color: #000000;
       color: #ffffff;
-      padding: 12px 20px;
+    }
+
+    body.high-contrast .card {
+      background-color: #1a1a1a;
+      border-left: 8px solid #ffd700;
+      color: #ffffff;
+    }
+
+    body.high-contrast .accessibility-bar,
+    body.high-contrast .nav-bar {
+      background-color: #000000;
+      border-bottom: 2px solid #ffd700;
+    }
+
+    body.high-contrast .btn-acc,
+    body.high-contrast .nav-btn,
+    body.high-contrast .btn-speak,
+    body.high-contrast .link-card {
+      background: #ffd700;
+      color: #000000;
+      border: 2px solid #ffffff;
+      font-weight: bold;
+    }
+
+    /* Barra de Acessibilidade Fixa */
+    .accessibility-bar {
+      background-color: var(--primary-dark);
+      color: #ffffff;
+      padding: 10px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       position: sticky;
       top: 0;
       z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
       flex-wrap: wrap;
       gap: 10px;
     }
 
-    .acc-group { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-    .acc-label { font-size: 0.9rem; font-weight: bold; }
+    .acc-buttons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
 
     .btn-acc {
-      background: #ffffff;
-      color: #000000;
-      border: none;
-      padding: 6px 14px;
-      font-weight: 700;
-      font-size: 0.9rem;
-      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.95);
+      color: var(--primary-dark);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      padding: 8px 14px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border-radius: 8px;
       cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     }
 
     .btn-acc:hover, .btn-acc:focus {
-      outline: 3px solid var(--red-accent);
+      background-color: #ffffff;
+      color: var(--primary-red);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      outline: 2px solid var(--accent-red);
     }
 
-    header {
-      background: linear-gradient(135deg, var(--red-dark), var(--red-main));
-      color: #ffffff;
-      text-align: center;
-      padding: 40px 20px 20px 20px;
-    }
-
-    header h1 { font-size: 2.2em; margin-bottom: 8px; }
-    header p { font-size: 1.1em; opacity: 0.9; }
-
-    /* Navegação por Abas */
-    .nav-tabs {
+    /* Menu de Navegação Direta entre Seções */
+    .nav-bar {
+      background-color: var(--primary-red);
       display: flex;
       justify-content: center;
-      background: var(--red-dark);
+      align-items: center;
+      gap: 12px;
+      padding: 10px 15px;
+      position: sticky;
+      top: 55px;
+      z-index: 999;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
       flex-wrap: wrap;
-      gap: 4px;
-      padding: 0 10px;
     }
 
-    .tab-btn {
-      background: transparent;
+    .nav-btn {
+      background: rgba(255, 255, 255, 0.95);
+      color: var(--primary-dark);
+      text-decoration: none;
+      padding: 8px 18px;
+      border-radius: 24px;
+      font-weight: 600;
+      font-size: 0.98rem;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid transparent;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    .nav-btn:hover, .nav-btn:focus {
+      background-color: #ffffff;
+      color: var(--accent-red);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+      outline: none;
+    }
+
+    /* Cabeçalho Principal */
+    header {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary-red));
       color: #ffffff;
-      border: none;
-      padding: 14px 20px;
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      border-top-left-radius: 10px;
-      border-top-right-radius: 10px;
-      transition: background 0.2s;
+      text-align: center;
+      padding: 50px 20px;
+      border-bottom: 5px solid var(--accent-red);
     }
 
-    .tab-btn:hover { background: var(--red-main); }
-    .tab-btn.active {
-      background: var(--bg-page);
-      color: var(--red-dark);
+    header h1 {
+      font-size: 2.5em;
+      margin-bottom: 15px;
     }
 
-    /* Conteúdo das Abas */
-    main { max-width: 960px; margin: 30px auto; padding: 0 20px; }
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
+    header p {
+      font-size: 1.3em;
+      max-width: 800px;
+      margin: 0 auto;
+      color: #ffdede;
+    }
+
+    /* Conteúdo Principal */
+    main {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
 
     .card {
-      background: var(--bg-card);
-      border-radius: var(--radius-lg);
+      background: var(--card-bg);
+      border-left: 8px solid var(--primary-red);
+      border-radius: 12px;
       padding: 30px;
-      border: 1px solid var(--red-border);
       box-shadow: 0 4px 15px rgba(0,0,0,0.05);
     }
 
-    .card h2 { color: var(--red-dark); margin-bottom: 16px; }
+    .card h2 {
+      color: var(--primary-dark);
+      font-size: 1.8em;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
+    /* Seção Guia de Segurança */
     .alert-box {
-      background-color: var(--red-light);
-      border-left: 5px solid var(--red-accent);
-      padding: 16px;
-      border-radius: var(--radius-md);
+      background-color: #fff0f0;
+      border: 2px solid var(--accent-red);
+      padding: 20px;
+      border-radius: 8px;
       margin-bottom: 20px;
     }
 
-    .emergency-box {
-      background: var(--red-dark);
+    .tips-list {
+      list-style-type: none;
+    }
+
+    .tips-list li {
+      margin-bottom: 15px;
+      padding-left: 35px;
+      position: relative;
+      font-size: 1.1em;
+    }
+
+    .tips-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      top: 0;
+      background: var(--primary-red);
       color: #ffffff;
-      padding: 20px;
-      border-radius: var(--radius-md);
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 24px;
+      font-size: 0.9em;
+    }
+
+    /* Grid de Links e Redirecionamentos */
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
       margin-top: 20px;
     }
 
-    .tips-list { list-style: none; }
-    .tips-list li { margin-bottom: 12px; padding-left: 30px; position: relative; }
-    .tips-list li::before {
-      content: "✓"; position: absolute; left: 0; color: var(--red-accent); font-weight: bold;
+    .link-card {
+      background: var(--card-bg);
+      color: var(--primary-dark);
+      text-decoration: none;
+      padding: 22px;
+      border-radius: 12px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 1.15em;
+      border: 1px solid #eae0e0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      transition: all 0.25s ease;
+      display: block;
     }
 
-    /* Simulador de Chat Interativo com Digitação */
-    .chat-container {
-      background: var(--red-light);
-      border: 1px solid var(--red-border);
-      border-radius: var(--radius-lg);
+    .link-card small {
+      display: block;
+      font-weight: normal;
+      font-size: 0.88em;
+      margin-top: 6px;
+      color: #665555;
+    }
+
+    .link-card:hover, .link-card:focus {
+      background: #ffffff;
+      border-color: var(--primary-red);
+      color: var(--primary-red);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(128, 0, 0, 0.12);
+      outline: none;
+    }
+
+    /* Botão de Leitura de Voz */
+    .btn-speak {
+      background: var(--primary-red);
+      color: #ffffff;
+      border: none;
+      padding: 12px 22px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-top: 15px;
+      transition: all 0.2s ease;
+      box-shadow: 0 3px 8px rgba(128, 0, 0, 0.2);
+    }
+
+    .btn-speak:hover, .btn-speak:focus {
+      background: var(--accent-red);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 14px rgba(179, 0, 0, 0.3);
+      outline: none;
+    }
+
+    /* Estilos do Simulador Prático */
+    .sim-container {
+      background-color: #f4ecec;
+      border: 2px solid var(--primary-red);
+      border-radius: 12px;
       padding: 20px;
+      margin: 20px 0;
+    }
+
+    .phone-screen {
+      background-color: #ffffff;
+      border: 3px solid var(--primary-dark);
+      border-radius: 15px;
+      overflow: hidden;
+      max-width: 500px;
+      margin: 0 auto 20px auto;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .phone-header {
+      background-color: var(--primary-dark);
+      color: #ffffff;
+      padding: 10px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .phone-body {
+      padding: 20px;
+      min-height: 140px;
+    }
+
+    .chat-bubble {
+      background-color: #f0f0f0;
+      border-left: 5px solid var(--accent-red);
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 1.1em;
+    }
+
+    .sim-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
       max-width: 500px;
       margin: 0 auto;
     }
 
-    .phone-box {
-      background: #ffffff;
-      border: 4px solid var(--text-main);
-      border-radius: 20px;
-      overflow: hidden;
-    }
-
-    .phone-bar {
-      background: var(--red-dark);
-      color: white;
-      padding: 10px;
-      text-align: center;
-      font-weight: bold;
-    }
-
-    .chat-messages {
-      height: 260px;
-      overflow-y: auto;
-      padding: 15px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      background: #f9f9f9;
-    }
-
-    .msg {
-      max-width: 80%;
-      padding: 10px 14px;
-      border-radius: 12px;
-      font-size: 0.95em;
-      line-height: 1.4;
-    }
-
-    .msg-scammer {
-      background: #ffffff;
-      border: 1px solid #ddd;
-      border-left: 4px solid var(--red-accent);
-      align-self: flex-start;
-      color: #000;
-    }
-
-    .msg-user {
-      background: var(--red-main);
-      color: #ffffff;
-      align-self: flex-end;
-    }
-
-    .chat-input-area {
-      display: flex;
-      padding: 10px;
-      background: #ffffff;
-      border-top: 1px solid #ddd;
-      gap: 8px;
-    }
-
-    .chat-input-area input {
-      flex: 1;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 0.95em;
-    }
-
-    .chat-input-area button {
-      background: var(--red-main);
-      color: white;
-      border: none;
-      padding: 10px 16px;
-      border-radius: 8px;
-      font-weight: bold;
+    .btn-choice {
+      background-color: #ffffff;
+      color: var(--text-color);
+      border: 1px solid #e0d0d0;
+      padding: 16px 20px;
+      border-radius: 10px;
+      font-size: 1.05em;
+      font-weight: 600;
       cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
     }
 
-    .evaluation-card {
-      margin-top: 15px;
+    .btn-choice:hover, .btn-choice:focus {
+      background-color: #fff8f8;
+      border-color: var(--primary-red);
+      color: var(--primary-dark);
+      transform: translateX(4px);
+      box-shadow: 0 4px 12px rgba(128, 0, 0, 0.1);
+      outline: none;
+    }
+
+    .sim-feedback {
+      max-width: 500px;
+      margin: 20px auto 0 auto;
       padding: 15px;
-      border-radius: var(--radius-md);
+      border-radius: 8px;
+      font-size: 1.1em;
       font-weight: bold;
     }
 
-    .eval-safe { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-    .eval-warning { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
-    .eval-danger { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+    .feedback-success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 2px solid #c3e6cb;
+    }
 
-    /* Grades de Conteúdo */
-    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 16px; }
-    .box-item { background: var(--bg-card); border: 1px solid var(--red-border); padding: 16px; border-radius: var(--radius-md); }
-    .btn-speak { background: var(--red-light); color: var(--red-main); border: 1px solid var(--red-border); padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 15px; }
+    .feedback-danger {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 2px solid #f5c6cb;
+    }
 
-    footer { background: var(--red-dark); color: white; text-align: center; padding: 25px; margin-top: 40px; }
+    .btn-next {
+      display: block;
+      margin: 15px auto 0 auto;
+      background: var(--primary-red);
+      color: #ffffff;
+      border: none;
+      padding: 11px 24px;
+      border-radius: 20px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 3px 8px rgba(128, 0, 0, 0.2);
+    }
+
+    .btn-next:hover, .btn-next:focus {
+      background: var(--accent-red);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 12px rgba(179, 0, 0, 0.3);
+      outline: none;
+    }
+
+    /* Rodapé */
+    footer {
+      background-color: var(--primary-dark);
+      color: #ffdede;
+      text-align: center;
+      padding: 30px;
+      margin-top: 50px;
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+      .accessibility-bar {
+        flex-direction: column;
+        gap: 15px;
+      }
+      header h1 {
+        font-size: 1.8em;
+      }
+      .card {
+        padding: 20px;
+      }
+    }
   </style>
 </head>
 <body>
 
-  <!-- Barra Fixa de Acessibilidade Ampliada -->
-  <div class="accessibility-bar" role="region" aria-label="Acessibilidade">
-    <div class="acc-group">
-      <span class="acc-label">Tamanho do Texto:</span>
-      <button class="btn-acc" onclick="changeFontSize(1)" aria-label="Aumentar texto">A+</button>
-      <button class="btn-acc" onclick="changeFontSize(-1)" aria-label="Diminuir texto">A-</button>
-      <button class="btn-acc" onclick="resetFontSize()" aria-label="Restaurar texto">Normal</button>
-    </div>
-    
-    <div class="acc-group">
-      <span class="acc-label">Cor da Página:</span>
-      <button class="btn-acc" onclick="setTheme('default')">Padrão</button>
-      <button class="btn-acc" onclick="setTheme('high-contrast')">Alto Contraste</button>
-      <button class="btn-acc" onclick="setTheme('warm')">Modo Leitura</button>
+  <!-- Barra Fixa de Acessibilidade Otimizada -->
+  <div class="accessibility-bar" role="region" aria-label="Ferramentas de Acessibilidade">
+    <span><strong>🛠️ Ferramentas Rápidas:</strong></span>
+    <div class="acc-buttons">
+      <button class="btn-acc" onclick="changeFontSize(1)" aria-label="Aumentar texto">A+ Texto</button>
+      <button class="btn-acc" onclick="changeFontSize(-1)" aria-label="Diminuir texto">A- Texto</button>
+      <button class="btn-acc" onclick="resetFontSize()" aria-label="Texto normal">Texto Normal</button>
+      <button class="btn-acc" onclick="toggleHighContrast()" aria-label="Modo alto contraste">👁️ Alto Contraste</button>
+      <button class="btn-acc" onclick="toggleSpeechSpeed()" id="btn-speed" aria-label="Alternar velocidade da fala">🐢 Fala Lenta</button>
+      <button class="btn-acc" onclick="stopSpeech()" aria-label="Parar leitura de voz">⏹️ Parar Voz</button>
     </div>
   </div>
+
+  <!-- Menu de Navegação do Topo -->
+  <nav class="nav-bar" aria-label="Navegação por Seções">
+    <a href="#seguranca" class="nav-btn">🛡️ Dicas de Segurança</a>
+    <a href="#basico" class="nav-btn">🌐 O Básico da Internet</a>
+    <a href="#links" class="nav-btn">🔗 Sites Úteis</a>
+    <a href="#simulador" class="nav-btn">🎭 Simulador Prático</a>
+  </nav>
 
   <!-- Cabeçalho -->
   <header>
     <h1>Conecta Sênior</h1>
-    <p>Tecnologia descomplicada, acessível e segura para a melhor idade.</p>
+    <p>Seu portal simples, seguro e direto para aprender a usar a internet com tranquilidade.</p>
   </header>
 
-  <!-- Navegação por Abas -->
-  <nav class="nav-tabs" role="tablist">
-    <button class="tab-btn active" onclick="switchTab('tab-seguranca', this)">🛡️ Dicas de Segurança</button>
-    <button class="tab-btn" onclick="switchTab('tab-simulador', this)">💬 Simulador Interativo</button>
-    <button class="tab-btn" onclick="switchTab('tab-tutoriais', this)">📲 Passo a Passo</button>
-    <button class="tab-btn" onclick="switchTab('tab-dicionario', this)">📖 Dicionário</button>
-    <button class="tab-btn" onclick="switchTab('tab-links', this)">🔗 Links Úteis</button>
-  </nav>
-
   <main>
-    <!-- ABA 1: SEGURANÇA -->
-    <div id="tab-seguranca" class="tab-content active">
-      <section class="card">
-        <h2>🛡️ Como Navegar com Segurança</h2>
-        <div class="alert-box">
-          <strong>Regra de Ouro:</strong> Bancos e empresas sérias jamais pedem senhas, códigos por SMS ou transferências urgentes via mensagem.
-        </div>
-        <ul class="tips-list">
-          <li><strong>Mensagens de parentes:</strong> Se pedirem dinheiro vindo de um número novo, ligue por voz para o número antigo antes de enviar qualquer valor.</li>
-          <li><strong>Links suspeitos:</strong> Evite clicar em links recebidos por SMS ou WhatsApp que prometem dinheiro fácil ou prêmios.</li>
-          <li><strong>Guarde suas senhas:</strong> Não anote senhas bancárias no próprio celular.</li>
-        </ul>
-        
-        <div class="emergency-box">
-          <h3>🚨 O que fazer se desconfiar de um golpe?</h3>
-          <p>1. Não faça nenhuma transferência.</p>
-          <p>2. Ligue para o número oficial do seu banco (no verso do cartão).</p>
-          <p>3. Converse imediatamente com um familiar de confiança.</p>
-        </div>
-        <button class="btn-speak" onclick="readText('tab-seguranca')">🔊 Ouvir esta seção</button>
-      </section>
-    </div>
 
-    <!-- ABA 2: SIMULADOR REALISTA -->
-    <div id="tab-simulador" class="tab-content">
-      <section class="card">
-        <h2>🎭 Simulador de Conversa em Tempo Real</h2>
-        <p>Digite como você responderia a essa mensagem suspeita e receba uma avaliação instantânea de segurança:</p>
-        <br>
-
-        <div style="margin-bottom: 15px;">
-          <label for="scam-selector"><strong>Escolha um cenário para testar:</strong></label>
-          <select id="scam-selector" onchange="loadScenario()" style="padding: 8px; border-radius: 6px; font-size: 1rem; width: 100%; margin-top: 6px;">
-            <option value="0">1. WhatsApp: Falso Filho Pedindo Pix</option>
-            <option value="1">2. SMS: Falso Bloqueio de Banco</option>
-            <option value="2">3. Falso Prêmio de TV</option>
-          </select>
-        </div>
-
-        <div class="chat-container">
-          <div class="phone-box">
-            <div class="phone-bar" id="chat-header">📱 Mensagem de Número Desconhecido</div>
-            <div class="chat-messages" id="chat-box">
-              <!-- Mensagens do Chat -->
-            </div>
-            <div class="chat-input-area">
-              <input type="text" id="user-input" placeholder="Digite sua resposta..." onkeypress="handleKeyPress(event)">
-              <button onclick="sendUserMessage()">Enviar</button>
-            </div>
-          </div>
-
-          <div id="eval-result" class="evaluation-card" style="display: none;"></div>
-        </div>
-      </section>
-    </div>
-
-    <!-- ABA 3: TUTORIAIS -->
-    <div id="tab-tutoriais" class="tab-content">
-      <section class="card">
-        <h2>📲 Passo a Passo para o Dia a Dia</h2>
-        <div class="grid-2">
-          <div class="box-item">
-            <h3>🎙️ Mandar Áudio no WhatsApp</h3>
-            <p>1. Abra a conversa da pessoa.</p>
-            <p>2. Pressione e segure o botão de microfone verde.</p>
-            <p>3. Fale e solte o botão para enviar.</p>
-          </div>
-          <div class="box-item">
-            <h3>📹 Fazer Chamada de Vídeo</h3>
-            <p>1. Entre na conversa com o contato.</p>
-            <p>2. Clique no ícone de câmera no topo da tela.</p>
-            <p>3. Aguarde a pessoa atender.</p>
-          </div>
-        </div>
-        <button class="btn-speak" onclick="readText('tab-tutoriais')">🔊 Ouvir esta seção</button>
-      </section>
-    </div>
-
-    <!-- ABA 4: DICIONÁRIO -->
-    <div id="tab-dicionario" class="tab-content">
-      <section class="card">
-        <h2>📖 Dicionário Digital</h2>
-        <div class="grid-2">
-          <div class="box-item"><strong>PIX:</strong> Transferência de dinheiro instantânea e gratuita pelo celular.</div>
-          <div class="box-item"><strong>Link:</strong> Endereço de um site em que você clica para abrir a página.</div>
-          <div class="box-item"><strong>Wi-Fi:</strong> Conexão de internet sem fio da sua casa ou estabelecimento.</div>
-          <div class="box-item"><strong>Biometria:</strong> Leitura da digital do dedo ou do rosto para destravar o celular.</div>
-        </div>
-      </section>
-    </div>
-
-    <!-- ABA 5: LINKS -->
-    <div id="tab-links" class="tab-content">
-      <section class="card">
-        <h2>🔗 Links Úteis e Seguros</h2>
-        <div class="grid-2">
-          <a href="https://www.gov.br" target="_blank" class="box-item" style="text-decoration:none;">
-            <strong>GOV.BR</strong><br><small>Serviços públicos e documentos digitais.</small>
-          </a>
-          <a href="https://meu.inss.gov.br" target="_blank" class="box-item" style="text-decoration:none;">
-            <strong>Meu INSS</strong><br><small>Consulta de extratos e benefícios.</small>
-          </a>
-        </div>
-      </section>
-    </div>
-  </main>
-
-  <footer>
-    <p><strong>Conecta Sênior</strong> — Promovendo inclusão digital, acessibilidade e autonomia.</p>
-  </footer>
-
-  <!-- LÓGICA JAVASCRIPT INTEGRADA -->
-  <script>
-    /* Controle de Abas */
-    function switchTab(tabId, btnElement) {
-      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    <!-- Seção 1: Guia Contra Golpes -->
+    <section class="card" id="seguranca">
+      <h2>🛡️ Como Não Cair em Golpes na Internet</h2>
+      <p>A internet é muito útil, mas exige cuidado. Siga estas orientações simples para navegar com segurança:</p>
+      <br>
       
-      document.getElementById(tabId).classList.add('active');
-      btnElement.classList.add('active');
+      <div class="alert-box">
+        <strong>Regra de Ouro:</strong> Bancos, delegacias ou empresas NUNCA ligam ou mandam mensagens pedindo a sua senha ou para você transferir dinheiro com urgência.
+      </div>
+
+      <ul class="tips-list">
+        <li><strong>Mensagens de parentes pedindo dinheiro:</strong> Se um filho ou neto mandar mensagem de um número novo pedindo dinheiro, ligue imediatamente para o número antigo dele para confirmar antes de enviar qualquer valor.</li>
+        <li><strong>Links suspeitos no WhatsApp:</strong> Não clique em links que prometem prêmios, dinheiro fácil ou recadastramentos de bancos.</li>
+        <li><strong>Senhas seguras:</strong> Nunca anote suas senhas no celular e jamais as compartilhe com desconhecidos.</li>
+        <li><strong>Compras online:</strong> Só compre em sites conhecidos. Peça ajuda a um familiar se tiver dúvidas sobre a loja.</li>
+      </ul>
+
+      <button class="btn-speak" onclick="readSection('seguranca')">🔊 Ouvir esta seção</button>
+    </section>
+
+    <!-- Seção 2: O Básico da Internet -->
+    <section class="card" id="basico">
+      <h2>🌐 O Básico que Você Precisa Saber</h2>
+      <p>Aprenda o significado dos termos mais comuns do dia a dia digital:</p>
+      <br>
+      <ul class="tips-list">
+        <li><strong>Navegador (Google Chrome, Edge):</strong> É o programa que você usa para "entrar" na internet e ver as páginas.</li>
+        <li><strong>Nuvem:</strong> É como um gaveteiro virtual onde suas fotos e arquivos ficam salvos com segurança sem ocupar espaço no celular.</li>
+        <li><strong>Aplicativo (App):</strong> Ferramentas e jogos que você baixa no celular para realizar tarefas específicas (como o WhatsApp ou o aplicativo do banco).</li>
+      </ul>
+
+      <button class="btn-speak" onclick="readSection('basico')">🔊 Ouvir esta seção</button>
+    </section>
+
+    <!-- Seção 3: Atalhos Úteis -->
+    <section class="card" id="links">
+      <h2>🔗 Sites Úteis e Seguros</h2>
+      <p>Acesse diretamente os serviços oficiais mais utilizados com apenas um clique:</p>
+      
+      <div class="links-grid">
+  <!-- Scripts de Acessibilidade, Voz Natural e Simulação -->
+  <script>
+    let currentScale = 1;
+    let speechSpeed = 0.85; // Velocidade inicial mais paciente e fluida
+    let melhorVozPT = null;
+
+    // Carrega e seleciona a voz mais fluida e natural disponível no dispositivo
+    function carregarMelhorVoz() {
+      if (!('speechSynthesis' in window)) return;
+      const vozes = window.speechSynthesis.getVoices();
+      
+      melhorVozPT = vozes.find(voz => 
+        voz.lang.includes('pt') && (
+          voz.name.includes('Natural') || 
+          voz.name.includes('Google') || 
+          voz.name.includes('Online') ||
+          voz.name.includes('Luciana') ||
+          voz.name.includes('Helena') ||
+          voz.name.includes('Francisca')
+        )
+      ) || vozes.find(voz => voz.lang.startsWith('pt'));
     }
 
-    /* Controle de Tamanho de Fonte */
-    let fontScale = 1;
-    function changeFontSize(dir) {
-      fontScale += dir * 0.1;
-      fontScale = Math.max(0.8, Math.min(fontScale, 1.5));
-      document.body.style.fontSize = fontScale + 'rem';
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.onvoiceschanged = carregarMelhorVoz;
+      carregarMelhorVoz();
     }
+
+    function changeFontSize(direction) {
+      currentScale += direction * 0.15;
+      if (currentScale < 0.8) currentScale = 0.8;
+      if (currentScale > 1.6) currentScale = 1.6;
+      document.body.style.fontSize = currentScale + 'rem';
+    }
+
     function resetFontSize() {
-      fontScale = 1;
+      currentScale = 1;
       document.body.style.fontSize = '1rem';
     }
 
-    /* Controle de Temas de Cores */
-    function setTheme(theme) {
-      document.body.classList.remove('theme-high-contrast', 'theme-warm');
-      if (theme === 'high-contrast') document.body.classList.add('theme-high-contrast');
-      if (theme === 'warm') document.body.classList.add('theme-warm');
+    function toggleHighContrast() {
+      document.body.classList.toggle('high-contrast');
     }
 
-    /* Leitor de Voz */
-    function readText(elementId) {
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-        const text = document.getElementById(elementId).innerText.replace(/🔊 Ouvir esta seção/g, '');
-        const utt = new SpeechSynthesisUtterance(text);
-        utt.lang = 'pt-BR';
-        utt.rate = 0.9;
-        window.speechSynthesis.speak(utt);
+    function toggleSpeechSpeed() {
+      const btnSpeed = document.getElementById('btn-speed');
+      if (speechSpeed === 0.85) {
+        speechSpeed = 1.0;
+        btnSpeed.innerText = '⚡ Fala Normal';
+      } else {
+        speechSpeed = 0.85;
+        btnSpeed.innerText = '🐢 Fala Lenta';
       }
     }
 
-    /* Lógica Avançada do Simulador Interativo com Avaliação de Digitação */
-    const scenarios = [
+    function stopSpeech() {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+    }
+
+    function readSection(elementId) {
+      const element = document.getElementById(elementId);
+      if ('speechSynthesis' in window && element) {
+        window.speechSynthesis.cancel(); // Para qualquer fala em andamento
+
+        // Limpa o texto removendo botões e emojis para não travar a fala
+        let textoLimpo = element.innerText
+          .replace(/🔊 Ouvir esta seção/gi, '')
+          .replace(/➔/g, '')
+          .replace(/[🛡️💬📲📖🔗🚨✓📱✉️🎁✅❌⚠️👁️🐢⚡⏹️🛠️🌐🎭]/g, '')
+          .replace(/\s+/g, ' ')
+          .trim();
+
+        const utterance = new SpeechSynthesisUtterance(textoLimpo);
+        
+        if (melhorVozPT) {
+          utterance.voice = melhorVozPT;
+        }
+
+        utterance.lang = 'pt-BR';
+        utterance.rate = speechSpeed;
+        utterance.pitch = 1.0;
+
+        window.speechSynthesis.speak(utterance);
+      } else {
+        alert('Seu navegador não suporta a leitura por voz.');
+      }
+    }
+
+    /* Dados e Lógica do Simulador */
+    const cenarios = [
       {
-        header: "📱 WhatsApp: Contato Desconhecido",
-        initialMsg: "Oi mãe! Troquei de celular, salva o número novo. Preciso pagar um boleto urgente de R$ 890 agora e meu aplicativo do banco travou. Pode fazer um Pix pra mim?",
-        safeKeywords: ["ligar", "telefonar", "quem", "voz", "número antigo", "nao", "não", "espera"],
-        riskKeywords: ["pix", "mando", "envio", "qual a chave", "pago", "beleza", "tá bom", "faço"]
+        mensagem: "💬 <strong>WhatsApp de Número Desconhecido:</strong><br><br>'Oi mãe/pai! Troquei de número, salva aí. Tive um problema no banco e preciso pagar uma conta urgente de R$ 850. Pode fazer um Pix pra mim?'",
+        opcoes: [
+          { texto: "A) Fazer o Pix rapidamente para ajudar.", correto: false, explicacao: "❌ <strong>Cuidado!</strong> Este é o golpe do falso filho. Nunca envie dinheiro sem falar por voz com a pessoa antes." },
+          { texto: "B) Ligar para o número antigo do seu filho para confirmar.", correto: true, explicacao: "✅ <strong>Excelente decisão!</strong> Sempre confirme a identidade da pessoa usando o número de telefone que você já tinha gravado." },
+          { texto: "C) Responder pedindo a senha do banco dele.", correto: false, explicacao: "❌ <strong>Atenção:</strong> Não responda a golpistas. A melhor atitude é ligar para o número antigo do parente." }
+        ]
       },
       {
-        header: "✉️ SMS: Notificação do Banco",
-        initialMsg: "ALERTA BANCO: Sua conta teve um acesso suspeito. Para evitar o bloqueio, clique imediatamente no link: www.banco-regularize.com",
-        safeKeywords: ["não vou clicar", "ligar pro banco", "banco", "falso", "cartao", "cartão", "ignorar"],
-        riskKeywords: ["cliquei", "ok", "vou entrar", "abrir", "senha", "cpf"]
+        mensagem: "✉️ <strong>SMS Recebido:</strong><br><br>'SEU BANCO: Sua conta foi bloqueada por suspeita de fraude. Clique no link para recadastrar: www.banco-seguro-atualiza.com'",
+        opcoes: [
+          { texto: "A) Clicar no link imediatamente para desbloquear.", correto: false, explicacao: "❌ <strong>Perigoso!</strong> Bancos não enviam links por SMS para recadastramento." },
+          { texto: "B) Ignorar a mensagem e entrar em contato com o banco pelo número no verso do cartão.", correto: true, explicacao: "✅ <strong>Correto!</strong> Na dúvida, use apenas o aplicativo oficial ou ligue para o número do verso do seu cartão bancário." }
+        ]
       },
       {
-        header: "🎁 SMS: Prêmio Promocional",
-        mensagem: "PARABÉNS! Você ganhou um prêmio de R$ 5.000 no sorteio! Para resgatar, responda com o código de 6 dígitos que enviamos no seu celular.",
-        safeKeywords: ["nao", "não", "golpe", "mentira", "nao me inscrevi", "código não"],
-        riskKeywords: ["codigo", "código", "mando", "qual o premio", "envio", "obrigado"]
+        mensagem: "🎁 <strong>E-mail Recebido:</strong><br><br>'Parabéns! Você foi sorteado e ganhou um vale-compras de R$ 2.000,00! Clique aqui para informar seus dados bancários e receber a quantia.'",
+        opcoes: [
+          { texto: "A) Preencher os dados bancários para receber o prêmio.", correto: false, explicacao: "❌ <strong>Cuidado!</strong> Ninguém dá prêmios sem você ter participado de algum sorteio oficial. Isso é para roubar seus dados." },
+          { texto: "B) Apagar a mensagem ou fechar a página.", correto: true, explicacao: "✅ <strong>Muito bem!</strong> Promessas de dinheiro fácil ou prêmios inesperados quase sempre são golpes." }
+        ]
       }
     ];
 
-    let currentScenario = 0;
+    let cenarioAtual = 0;
 
-    function loadScenario() {
-      currentScenario = parseInt(document.getElementById('scam-selector').value);
-      const scenario = scenarios[currentScenario];
-      
-      document.getElementById('chat-header').innerText = scenario.header;
-      const chatBox = document.getElementById('chat-box');
-      chatBox.innerHTML = `<div class="msg msg-scammer">${scenario.initialMsg}</div>`;
-      
-      document.getElementById('eval-result').style.display = 'none';
-      document.getElementById('user-input').value = '';
+    function carregarCenario() {
+      const cenario = cenarios[cenarioAtual];
+      const contentDiv = document.getElementById('sim-content');
+      const actionsDiv = document.getElementById('sim-actions');
+      const feedbackDiv = document.getElementById('sim-feedback');
+
+      feedbackDiv.style.display = 'none';
+      contentDiv.innerHTML = `<div class="chat-bubble">${cenario.mensagem}</div>`;
+      actionsDiv.innerHTML = '';
+
+      cenario.opcoes.forEach((opcao) => {
+        const btn = document.createElement('button');
+        btn.className = 'btn-choice';
+        btn.innerHTML = opcao.texto;
+        btn.onclick = () => verificarResposta(opcao);
+        actionsDiv.appendChild(btn);
+      });
     }
 
-    function handleKeyPress(e) {
-      if (e.key === 'Enter') sendUserMessage();
-    }
-
-    function sendUserMessage() {
-      const inputField = document.getElementById('user-input');
-      const text = inputField.value.trim();
-      if (!text) return;
-
-      const chatBox = document.getElementById('chat-box');
+    function verificarResposta(opcao) {
+      const feedbackDiv = document.getElementById('sim-feedback');
+      feedbackDiv.style.display = 'block';
       
-      // Adiciona mensagem do usuário
-      const userMsgDiv = document.createElement('div');
-      userMsgDiv.className = 'msg msg-user';
-      userMsgDiv.innerText = text;
-      chatBox.appendChild(userMsgDiv);
-      
-      inputField.value = '';
-      chatBox.scrollTop = chatBox.scrollHeight;
-
-      // Avalia a resposta do usuário
-      evaluateUserResponse(text.toLowerCase());
-    }
-
-    function evaluateUserResponse(text) {
-      const scenario = scenarios[currentScenario];
-      const evalDiv = document.getElementById('eval-result');
-      evalDiv.style.display = 'block';
-
-      let containsSafe = scenario.safeKeywords.some(kw => text.includes(kw));
-      let containsRisk = scenario.riskKeywords.some(kw => text.includes(kw));
-
-      if (containsSafe && !containsRisk) {
-        evalDiv.className = 'evaluation-card eval-safe';
-        evalDiv.innerHTML = '✅ <strong>Excelente Reação!</strong> Você agiu com cautela, desconfiou ou buscou confirmar a identidade/informação por vias seguras.';
-      } else if (containsRisk) {
-        evalDiv.className = 'evaluation-card eval-danger';
-        evalDiv.innerHTML = '❌ <strong>Atenção ao Risco!</strong> Sua resposta indicou intenção de enviar dados, dinheiro ou clicar no link. Em situações reais, desconfie e nunca faça transferências sem falar por voz!';
+      if (opcao.correto) {
+        feedbackDiv.className = 'sim-feedback feedback-success';
       } else {
-        evalDiv.className = 'evaluation-card eval-warning';
-        evalDiv.innerHTML = '⚠️ <strong>Dica de Segurança:</strong> Em casos assim, a melhor atitude é <strong>não responder</strong> e ligar diretamente para a pessoa ou instituição pelo número oficial.';
+        feedbackDiv.className = 'sim-feedback feedback-danger';
       }
+      
+      feedbackDiv.innerHTML = `${opcao.explicacao} <br><button class="btn-next" onclick="proximoCenario()">Próximo Teste ➔</button>`;
     }
 
-    window.addEventListener('DOMContentLoaded', loadScenario);
+    function proximoCenario() {
+      cenarioAtual = (cenarioAtual + 1) % cenarios.length;
+      carregarCenario();
+    }
+
+    window.addEventListener('DOMContentLoaded', carregarCenario);
   </script>
 </body>
 </html>
